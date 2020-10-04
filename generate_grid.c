@@ -3,8 +3,8 @@
 #include <time.h>
 
 #define FILE_NAME "initial_grid.txt"
-#define DEAD '0'
-#define ALIVE '1'
+#define DEAD '-'
+#define ALIVE 'x'
 
 int main(int argc, char **argv){
     FILE* fp = fopen(FILE_NAME, "w");

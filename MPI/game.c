@@ -9,12 +9,14 @@ char** create_subgrid(const int dims[]){
 	char **subgrid = malloc(dims[0] * sizeof(char));      //allocating space for grid
 	char ALIVE = 'x', DEAD = '-';
 
-	for (int i = 0; i < dims[0]; i++){
-		subgrid[i] = malloc(dims[1] * sizeof(char));
-		for(int j = 0; j < dims[1]; j++){
-			subgrid[i][j] = (rand() % 10) < 7 ? DEAD : ALIVE;       // dead : alive ratio 7:3
-		}
-	}
+	for (int i = 0; i < dims[0]; i++)
+		subgrid[i] = malloc(dims[1] * sizeof(char))
+
+    for(i = 1; i < dims[0] - 1; i++)        // fill in the 'white' and 'green' part of the chunk
+        for(int j = 1; j < dims[1] - 1; j++){
+            subgrid[i][j] = (rand() % 10) < 7 ? DEAD : ALIVE;       // dead : alive ratio 7:3
+        }
+	
 	return subgrid;
 }
 
@@ -105,6 +107,12 @@ int main(void){
 	MPI_Cart_Coords(cartesian, my_rank, 2, my_coords);      // retrieve this process's position in the cartesian comm
 	
 	int neighbors[8] = {0,0,0,0,0,0,0,0};
+    /////////////// SUM UP ////////////////
+    // Call MPI_Cart_shift twice, once  ///
+    // for row and once for column      ///
+    // Then call MPI_Cart_rank 4 times  ///
+    // for the corners                  ///
+    ///////////////////////////////////////
 
 	// calculation of the chunk position for this process
 	// chunk_pos[1] = my_coords[1] * chunk_dims[1];
@@ -114,6 +122,11 @@ int main(void){
 	// char **my_grid = create_subgrid(chunk_dims);
 	
 	// do we need to construct the type of 'row' / 'column' ??
+    MPI_Datatype row, column;
+    MPI_Type_Vector(ROWS);
+    MPI_Type_Vector(COLUMNS);
+    MPI_Type_commit(&row);
+    MPI_Type_commit(&column);
 	// switch(rank){
 		// MPI_IRecv to neighbors
 		// MPI_ISend to neighbors

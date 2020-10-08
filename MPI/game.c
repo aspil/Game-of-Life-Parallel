@@ -73,7 +73,7 @@ int main(int argc, char *argv[]){
 	int my_rank, neighbour_rank, src, dest;
 	int comm_dims[2];       // dimensions of communicator shape, initialized to 0,0
 	int period[2] = {1,1};       // in this implementation, we work on a simple-grid-shaped communicator
-	
+	int generation = 0;
 	int width_local, height_local;      // width x length of this process's chunk, initialized to 0x0
 	int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
 
@@ -88,19 +88,19 @@ int main(int argc, char *argv[]){
 	height_local = (int) (grid_width / comm_dims[0]);      // casting is not actually necessary, everything is a power of 2
 	width_local = (int) (grid_width / comm_dims[1]);
 	
+	/* Allocate the 'before' and 'after' grids */
 	char **current = malloc((height_local+2) * sizeof(char*));
-	char **next =  malloc((height_local+2) * sizeof(char*));
+	char *current0 = malloc((height_local+2) * (width_local+2) * sizeof(char));
 
-	current[0] = malloc((height_local+2) * (width_local+2) * sizeof(char));
-	next[0] = malloc((height_local+2) * (width_local+2) * sizeof(char));
+	char **next =  malloc((height_local+2) * sizeof(char*));
+	char *next0 = malloc((height_local+2) * (width_local+2) * sizeof(char));
 
 	for (int i = 0; i < (height_local+2); i++){
-		current[i] = current[0] + i * (width_local+2);
-		next[i] = current[0] + i * (width_local+2);
+		current[i] = current0 + i * (width_local+2);
+		next[i] = next0 + i * (width_local+2);
 	}
 
-	// initialize my current subgrid randomly
-	// printf("My rank is %d\n", my_rank);
+	/* Initialize the 'before' or current subgrid */
 	for (int i = 1; i < height_local + 1; i++) {      // initialize cells; let's see if grid[i][j] works  
 		for (int j = 1; j < width_local + 1; j++) {
 			current[i][j] = (rand() % 10) < 7 ? DEAD : ALIVE;       // dead : alive ratio 7:3
@@ -117,71 +117,84 @@ int main(int argc, char *argv[]){
 	int neighbour_dims[2];
 	
 	MPI_Cart_shift(cartesian, 0, 1, &src, &dest);
-	neighbours[0] = src;		/* North neighbour */
+	neighbours[0] = src;	/* North neighbour */
 	neighbours[1] = dest; 	/* South neighbour */
 
 	MPI_Cart_shift(cartesian, 1, 1, &src, &dest);
 	neighbours[2] = src;	/* West neighbour */
 	neighbours[3] = dest;	/* East neighbour */
-
+	
+	/* North-West neighbour */
 	neighbour_dims[0] = my_coords[0]-1; neighbour_dims[1] = my_coords[1]-1;
 	MPI_Cart_rank(cartesian, neighbour_dims, &neighbour_rank);
-	neighbours[4] = neighbour_rank;		/* North-West neighbour */
+	neighbours[4] = neighbour_rank;		
 	
+	/* North-East neighbour */
 	neighbour_dims[0] = my_coords[0]-1; neighbour_dims[1] = my_coords[1]+1;
 	MPI_Cart_rank(cartesian, neighbour_dims, &neighbour_rank);
-	neighbours[5] = neighbour_rank;		/* North-East neighbour */
+	neighbours[5] = neighbour_rank;		
 	
+	/* South-West neighbour */
 	neighbour_dims[0] = my_coords[0]+1; neighbour_dims[1] = my_coords[1]-1;
 	MPI_Cart_rank(cartesian, neighbour_dims, &neighbour_rank);
-	neighbours[6] = neighbour_rank;		/* South-West neighbour */
+	neighbours[6] = neighbour_rank;		
 	
+	/* South-East neighbour */
 	neighbour_dims[0] = my_coords[0]+1; neighbour_dims[1] = my_coords[1]+1;
 	MPI_Cart_rank(cartesian, neighbour_dims, &neighbour_rank);
-	neighbours[7] = neighbour_rank;		/* South-East neighbour */
+	neighbours[7] = neighbour_rank;		
 
 	MPI_Datatype column;		//we construct a new type to send the columns
 	MPI_Type_vector(height_local, 1, width_local + 2, MPI_CHAR, &column); // count, blocklength, stride, old, new
 	MPI_Type_commit(&column);
 	
-	MPI_Request SRequest[8], RRequest[8];
+	MPI_Request SRequests[8];
+	MPI_Request RRequests[8];
+
 	/* Northern process communication */
-	MPI_Send_init(&current[1][1], width_local, MPI_CHAR, neighbours[0], 1, cartesian, &SRequest[0]);
-	MPI_Recv_init(&current[0][1], 			1, MPI_CHAR, neighbours[0], 1, cartesian, &RRequest[0]);
+	MPI_Send_init(&current[1][1], width_local, MPI_CHAR, neighbours[0], 0, cartesian, &SRequests[0]);
+	MPI_Recv_init(&current[0][1], width_local, MPI_CHAR, neighbours[0], 0, cartesian, &RRequests[0]);
 	
 	/* Southern process communication */
-	MPI_Send_init(&current[height_local][1],   width_local, MPI_CHAR, neighbours[1], 2, cartesian, &SRequest[1]);
-	MPI_Recv_init(&current[height_local+1][1], 			 1, MPI_CHAR, neighbours[1], 2, cartesian, &RRequest[1]);
+	MPI_Send_init(&current[height_local][1],   width_local, MPI_CHAR, neighbours[1], 0, cartesian, &SRequests[1]);
+	MPI_Recv_init(&current[height_local+1][1], width_local, MPI_CHAR, neighbours[1], 0, cartesian, &RRequests[1]);
 
 	/* Western process communication */
-	MPI_Send_init(&current[1][1], height_local, column, neighbours[2], 3, cartesian, &SRequest[2]);
-	MPI_Recv_init(&current[1][0], 			 1, column, neighbours[2], 3, cartesian, &RRequest[2]);
+	MPI_Send_init(&current[1][1], 1, column, neighbours[2], 0, cartesian, &SRequests[2]);
+	MPI_Recv_init(&current[1][0], 1, column, neighbours[2], 0, cartesian, &RRequests[2]);
 	
 	/* Easter process communication */
-	MPI_Send_init(&current[1][width_local],  height_local, column, neighbours[3], 4, cartesian, &SRequest[3]);
-	MPI_Recv_init(&current[1][width_local+1], 			1, column, neighbours[3], 4, cartesian, &RRequest[3]);
+	MPI_Send_init(&current[1][width_local],  	1, column, neighbours[3], 0, cartesian, &SRequests[3]);
+	MPI_Recv_init(&current[1][width_local+1], 	1, column, neighbours[3], 0, cartesian, &RRequests[3]);
 
-	/* North-western process communication */
-	MPI_Send_init(&current[1][1], 1, MPI_CHAR, neighbours[4], 5, cartesian, &SRequest[4]);
-	MPI_Recv_init(&current[0][0], 1, MPI_CHAR, neighbours[4], 5, cartesian, &RRequest[4]);
+	/* North-westernq process communication */
+	MPI_Send_init(&current[1][1], 1, MPI_CHAR, neighbours[4], 0, cartesian, &SRequests[4]);
+	MPI_Recv_init(&current[0][0], 1, MPI_CHAR, neighbours[4], 0, cartesian, &RRequests[4]);
 	
 	/* North-eastern process communication */
-	MPI_Send_init(&current[width_local][1],	  1, MPI_CHAR, neighbours[5], 6, cartesian, &SRequest[5]);
-	MPI_Recv_init(&current[0][width_local+1], 1, MPI_CHAR, neighbours[5], 6, cartesian, &RRequest[5]);
+	MPI_Send_init(&current[width_local][1],	  1, MPI_CHAR, neighbours[5], 0, cartesian, &SRequests[5]);
+	MPI_Recv_init(&current[0][width_local+1], 1, MPI_CHAR, neighbours[5], 0, cartesian, &RRequests[5]);
 	
 	/* South-western process communication */
-	MPI_Send_init(&current[height_local][1],   1, MPI_CHAR, neighbours[6], 7, cartesian, &SRequest[6]);
-	MPI_Recv_init(&current[height_local+1][0], 1, MPI_CHAR, neighbours[6], 7, cartesian, &RRequest[6]);
+	MPI_Send_init(&current[height_local][1],   1, MPI_CHAR, neighbours[6], 0, cartesian, &SRequests[6]);
+	MPI_Recv_init(&current[height_local+1][0], 1, MPI_CHAR, neighbours[6], 0, cartesian, &RRequests[6]);
 	
 	/* South-eastern process communication */
-	MPI_Send_init(&current[height_local][width_local], 	   1, MPI_CHAR, neighbours[7], 8, cartesian, &SRequest[7]);
-	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 8, cartesian, &RRequest[7]);
+	MPI_Send_init(&current[height_local][width_local], 	   1, MPI_CHAR, neighbours[7], 0, cartesian, &SRequests[7]);
+	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 0, cartesian, &RRequests[7]);
 	
+	MPI_Status status[8];
+	while (generation < 1) {
+		MPI_Startall(8, RRequests);
+		MPI_Startall(8, SRequests);
+		/* TODO υπολογισμος εσωτερικων κελιων */
+		MPI_Waitall(8,  RRequests, MPI_STATUSES_IGNORE);
+		/* TODO υπολογισμος εξωτερικων κελιων */
+		MPI_Waitall(8,  SRequests, MPI_STATUSES_IGNORE);
+	}
 
-	// MPI_Comm_free(&cartesian);
-	printf("my rank = %d\n",my_rank);
+	MPI_Comm_free(&cartesian);
 	MPI_Finalize();
-	printf("Now running serial\n");
 	
 	free(current[0]);
 	free(current);

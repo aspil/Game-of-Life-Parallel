@@ -1,10 +1,10 @@
-mpi_test.x: mpi_test.c 
-	mpicc -g -Wall -o mpi_test.x mpi_test.c 
+game.x: game.c 
+	mpicc -g -Wall -o game.x game.c 
 
 .PHONY:
 	clean, clean_all
 
 clean:
-	rm -f *.o* *.e* mpi_test.x
+	rm -f *.o* *.e* game.x
 # clean:
 # 	rm *.o* *.e*

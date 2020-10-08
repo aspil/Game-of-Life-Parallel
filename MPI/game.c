@@ -207,7 +207,7 @@ int main(int argc, char *argv[]){
                 if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
 
                 if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
-                    switch(neighbors){
+                    switch(alive_neighbors){
                         case 2:
                         case 3:
                             next[i][j] = ALIVE;
@@ -216,12 +216,12 @@ int main(int argc, char *argv[]){
                             next[i][j] = DEAD;  // die due to underpopulation or overpopulation
                     }
                 } else {        // this cell is not occupied -- DEAD
-                    switch(neighbors){
+                    switch(alive_neighbors){
                         case 3:
                             next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
                             break;
                         default:
-                            next[i][j] = DEAD       // not enough / too many neighbors
+                            next[i][j] = DEAD;       // not enough / too many neighbors
                     }
                 }
             }
@@ -246,7 +246,7 @@ int main(int argc, char *argv[]){
             if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
 
             if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 2:
                     case 3:
                         next[i][j] = ALIVE;
@@ -255,12 +255,12 @@ int main(int argc, char *argv[]){
                         next[i][j] = DEAD;  // die due to underpopulation or overpopulation
                 }
             } else {        // this cell is not occupied -- DEAD
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 3:
                         next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
                         break;
                     default:
-                        next[i][j] = DEAD       // not enough / too many neighbors
+                        next[i][j] = DEAD;       // not enough / too many neighbors
                 }
             }
         //////////////  RIGHTMOST COLUMN //////////////
@@ -277,7 +277,7 @@ int main(int argc, char *argv[]){
             if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
 
             if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 2:
                     case 3:
                         next[i][j] = ALIVE;
@@ -286,12 +286,12 @@ int main(int argc, char *argv[]){
                         next[i][j] = DEAD;  // die due to underpopulation or overpopulation
                 }
             } else {        // this cell is not occupied -- DEAD
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 3:
                         next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
                         break;
                     default:
-                        next[i][j] = DEAD       // not enough / too many neighbors
+                        next[i][j] = DEAD;       // not enough / too many neighbors
                 }
             }
         }
@@ -299,7 +299,7 @@ int main(int argc, char *argv[]){
         for(j = 1; j < width_local + 1; j++){   // calculating the green rows
             
         //////////////  UPPERMOST ROW //////////////
-            neighbors = 0;
+            alive_neighbors = 0;
             i = 1;
 
             if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
@@ -312,7 +312,7 @@ int main(int argc, char *argv[]){
             if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
 
             if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 2:
                     case 3:
                         next[i][j] = ALIVE;
@@ -321,16 +321,16 @@ int main(int argc, char *argv[]){
                         next[i][j] = DEAD;  // die due to underpopulation or overpopulation
                 }
             } else {        // this cell is not occupied -- DEAD
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 3:
                         next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
                         break;
                     default:
-                        next[i][j] = DEAD       // not enough / too many neighbors
+                        next[i][j] = DEAD;      // not enough / too many neighbors
                 }
             }
             //////////////  LOWERMOST ROW //////////////
-            neighbors = 0;
+            alive_neighbors = 0;
             i = width_local;
 
             if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
@@ -343,7 +343,7 @@ int main(int argc, char *argv[]){
             if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
 
             if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 2:
                     case 3:
                         next[i][j] = ALIVE;
@@ -352,12 +352,12 @@ int main(int argc, char *argv[]){
                         next[i][j] = DEAD;  // die due to underpopulation or overpopulation
                 }
             } else {        // this cell is not occupied -- DEAD
-                switch(neighbors){
+                switch(alive_neighbors){
                     case 3:
                         next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
                         break;
                     default:
-                        next[i][j] = DEAD       // not enough / too many neighbors
+                        next[i][j] = DEAD;       // not enough / too many neighbors
                 }
             }
         }

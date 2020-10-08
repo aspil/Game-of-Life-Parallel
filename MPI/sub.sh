@@ -12,7 +12,7 @@ res_ceil=$(echo "$res" | perl -nl -MPOSIX -e 'print ceil($_);')
 res_floor=$(echo "$res" | perl -nl -MPOSIX -e 'print floor($_);')
 
 if [[ $res_ceil != $res_floor ]]; then
-	echo "[Argo073]: $1 is not a power of 2. Please give a number that is a power of 2."
+	echo "[$(whoami)]: $1 is not a power of 2. Please give a number that is a power of 2."
 	exit
 fi
 

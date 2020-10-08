@@ -75,7 +75,7 @@ int main(int argc, char *argv[]){
 	int period[2] = {1,1};       // in this implementation, we work on a simple-grid-shaped communicator
 	int generation = 0;
 	int width_local, height_local;      // width x length of this process's chunk, initialized to 0x0
-	int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
+	// int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
 
 	MPI_Init(NULL, NULL);   
 	MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
@@ -156,34 +156,34 @@ int main(int argc, char *argv[]){
 	MPI_Recv_init(&current[0][1], width_local, MPI_CHAR, neighbours[0], 0, cartesian, &RRequests[0]);
 	
 	/* Southern process communication */
-	MPI_Send_init(&current[height_local][1],   width_local, MPI_CHAR, neighbours[1], 0, cartesian, &SRequests[1]);
-	MPI_Recv_init(&current[height_local+1][1], width_local, MPI_CHAR, neighbours[1], 0, cartesian, &RRequests[1]);
+	MPI_Send_init(&current[height_local][1],   width_local, MPI_CHAR, neighbours[1], 1, cartesian, &SRequests[1]);
+	MPI_Recv_init(&current[height_local+1][1], width_local, MPI_CHAR, neighbours[1], 1, cartesian, &RRequests[1]);
 
 	/* Western process communication */
-	MPI_Send_init(&current[1][1], 1, column, neighbours[2], 0, cartesian, &SRequests[2]);
-	MPI_Recv_init(&current[1][0], 1, column, neighbours[2], 0, cartesian, &RRequests[2]);
+	MPI_Send_init(&current[1][1], 1, column, neighbours[2], 2, cartesian, &SRequests[2]);
+	MPI_Recv_init(&current[1][0], 1, column, neighbours[2], 2, cartesian, &RRequests[2]);
 	
 	/* Easter process communication */
-	MPI_Send_init(&current[1][width_local],  	1, column, neighbours[3], 0, cartesian, &SRequests[3]);
-	MPI_Recv_init(&current[1][width_local+1], 	1, column, neighbours[3], 0, cartesian, &RRequests[3]);
+	MPI_Send_init(&current[1][width_local],  	1, column, neighbours[3], 3, cartesian, &SRequests[3]);
+	MPI_Recv_init(&current[1][width_local+1], 	1, column, neighbours[3], 3, cartesian, &RRequests[3]);
 
 	/* North-westernq process communication */
-	MPI_Send_init(&current[1][1], 1, MPI_CHAR, neighbours[4], 0, cartesian, &SRequests[4]);
-	MPI_Recv_init(&current[0][0], 1, MPI_CHAR, neighbours[4], 0, cartesian, &RRequests[4]);
+	MPI_Send_init(&current[1][1], 1, MPI_CHAR, neighbours[4], 4, cartesian, &SRequests[4]);
+	MPI_Recv_init(&current[0][0], 1, MPI_CHAR, neighbours[4], 4, cartesian, &RRequests[4]);
 	
 	/* North-eastern process communication */
-	MPI_Send_init(&current[width_local][1],	  1, MPI_CHAR, neighbours[5], 0, cartesian, &SRequests[5]);
-	MPI_Recv_init(&current[0][width_local+1], 1, MPI_CHAR, neighbours[5], 0, cartesian, &RRequests[5]);
+	MPI_Send_init(&current[width_local][1],	  1, MPI_CHAR, neighbours[5], 5, cartesian, &SRequests[5]);
+	MPI_Recv_init(&current[0][width_local+1], 1, MPI_CHAR, neighbours[5], 5, cartesian, &RRequests[5]);
 	
 	/* South-western process communication */
-	MPI_Send_init(&current[height_local][1],   1, MPI_CHAR, neighbours[6], 0, cartesian, &SRequests[6]);
-	MPI_Recv_init(&current[height_local+1][0], 1, MPI_CHAR, neighbours[6], 0, cartesian, &RRequests[6]);
+	MPI_Send_init(&current[height_local][1],   1, MPI_CHAR, neighbours[6], 6, cartesian, &SRequests[6]);
+	MPI_Recv_init(&current[height_local+1][0], 1, MPI_CHAR, neighbours[6], 6, cartesian, &RRequests[6]);
 	
 	/* South-eastern process communication */
-	MPI_Send_init(&current[height_local][width_local], 	   1, MPI_CHAR, neighbours[7], 0, cartesian, &SRequests[7]);
-	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 0, cartesian, &RRequests[7]);
+	MPI_Send_init(&current[height_local][width_local], 	   1, MPI_CHAR, neighbours[7], 7, cartesian, &SRequests[7]);
+	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 7, cartesian, &RRequests[7]);
 	
-	MPI_Status status[8];
+	// MPI_Status status[8];
 	while (generation < 1) {
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
@@ -191,6 +191,7 @@ int main(int argc, char *argv[]){
 		MPI_Waitall(8,  RRequests, MPI_STATUSES_IGNORE);
 		/* TODO υπολογισμος εξωτερικων κελιων */
 		MPI_Waitall(8,  SRequests, MPI_STATUSES_IGNORE);
+        generation++;        
 	}
 
 	MPI_Comm_free(&cartesian);

@@ -3,7 +3,7 @@
 n_proc=$1
 
 if [ $n_proc -le 0 ]; then
-	echo "[Argo073]: Please provide a positive number of processes."
+	echo "[$(whoami)]: Please provide a positive number of processes."
 	exit
 fi
 
@@ -17,12 +17,12 @@ if [[ $res_ceil != $res_floor ]]; then
 fi
 
 # Remove the switch argument from mpirun command on mpiPBSscript.sh
-sed -i -e 's/mpirun -n [0-9]* mpi_test.x/mpirun mpi_test.x/g' mpiPBSscript.sh
+sed -i -e 's/mpirun -n [0-9]* game.x/mpirun game.x/g' mpiPBSscript.sh
 
 if [[ n_proc -le 4 ]]; then
 	sed -i -e 's/select=[0-9]*/select=1/g' mpiPBSscript.sh
 	sed -i -e 's/mpiprocs=[0-9]*/mpiprocs='$n_proc'/g' mpiPBSscript.sh
-	sed -i -e 's/mpirun mpi_test.x/mpirun -n '$n_proc' mpi_test.x/g' mpiPBSscript.sh
+	sed -i -e 's/mpirun game.x/mpirun -n '$n_proc' game.x/g' mpiPBSscript.sh
 else
 	nodes=$(($n_proc / 8))
 	sed -i -e 's/select=[0-9]*/select='$nodes'/g' mpiPBSscript.sh

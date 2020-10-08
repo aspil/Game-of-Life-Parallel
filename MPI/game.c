@@ -75,6 +75,7 @@ int main(int argc, char *argv[]){
 	int period[2] = {1,1};       // in this implementation, we work on a simple-grid-shaped communicator
 	int generation = 0;
 	int width_local, height_local;      // width x length of this process's chunk, initialized to 0x0
+    int i, j;       // declaring here, so it only costs once
 	// int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
 
 	MPI_Init(NULL, NULL);   
@@ -95,14 +96,14 @@ int main(int argc, char *argv[]){
 	char **next =  malloc((height_local+2) * sizeof(char*));
 	char *next0 = malloc((height_local+2) * (width_local+2) * sizeof(char));
 
-	for (int i = 0; i < (height_local+2); i++){
+	for (i = 0; i < (height_local+2); i++){
 		current[i] = current0 + i * (width_local+2);
 		next[i] = next0 + i * (width_local+2);
 	}
 
 	/* Initialize the 'before' or current subgrid */
-	for (int i = 1; i < height_local + 1; i++) {      // initialize cells; let's see if grid[i][j] works  
-		for (int j = 1; j < width_local + 1; j++) {
+	for (i = 1; i < height_local + 1; i++) {      // initialize cells; let's see if grid[i][j] works  
+		for (j = 1; j < width_local + 1; j++) {
 			current[i][j] = (rand() % 10) < 7 ? DEAD : ALIVE;       // dead : alive ratio 7:3
 			// printf("%c", current[i][j]);
 		}
@@ -167,7 +168,7 @@ int main(int argc, char *argv[]){
 	MPI_Send_init(&current[1][width_local],  	1, column, neighbours[3], 3, cartesian, &SRequests[3]);
 	MPI_Recv_init(&current[1][width_local+1], 	1, column, neighbours[3], 3, cartesian, &RRequests[3]);
 
-	/* North-westernq process communication */
+	/* North-western process communication */
 	MPI_Send_init(&current[1][1], 1, MPI_CHAR, neighbours[4], 4, cartesian, &SRequests[4]);
 	MPI_Recv_init(&current[0][0], 1, MPI_CHAR, neighbours[4], 4, cartesian, &RRequests[4]);
 	
@@ -184,15 +185,205 @@ int main(int argc, char *argv[]){
 	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 7, cartesian, &RRequests[7]);
 	
 	// MPI_Status status[8];
+    int alive_neighbors;
 	while (generation < 1) {
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
-		/* TODO υπολογισμος εσωτερικων κελιων */
+
+		/* evolution of inner (white) cells */
+        for(i = 2; i < height_local; i++){
+            for(j = 2; j < width_local; j++){
+                alive_neighbors = 0;
+                // 0-1 or 4-8 => die (underpop or overpop)
+                // 2-3 => live
+                // exactly 3 & DEAD => new
+                if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
+                if(current[i-1][j] == ALIVE) alive_neighbors++;     // check N 
+                if(current[i-1][j+1] == ALIVE) alive_neighbors++;   // check NE
+                if(current[i][j-1] == ALIVE) alive_neighbors++;     // check W 
+                if(current[i][j+1] == ALIVE) alive_neighbors++;     // check E 
+                if(current[i+1][j-1] == ALIVE) alive_neighbors++;   // check SW
+                if(current[i+1][j] == ALIVE) alive_neighbors++;     // check S 
+                if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
+
+                if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
+                    switch(neighbors){
+                        case 2:
+                        case 3:
+                            next[i][j] = ALIVE;
+                            break;
+                        default:
+                            next[i][j] = DEAD;  // die due to underpopulation or overpopulation
+                    }
+                } else {        // this cell is not occupied -- DEAD
+                    switch(neighbors){
+                        case 3:
+                            next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
+                            break;
+                        default:
+                            next[i][j] = DEAD       // not enough / too many neighbors
+                    }
+                }
+            }
+        }
+
 		MPI_Waitall(8,  RRequests, MPI_STATUSES_IGNORE);
+
 		/* TODO υπολογισμος εξωτερικων κελιων */
+        for(i = 1; i < height_local + 1; i++){   // calculating the green columns
+
+        //////////////  RIGHTMOST COLUMN //////////////
+            alive_neighbors = 0;
+            j = 1; 
+
+            if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
+            if(current[i-1][j] == ALIVE) alive_neighbors++;     // check N 
+            if(current[i-1][j+1] == ALIVE) alive_neighbors++;   // check NE
+            if(current[i][j-1] == ALIVE) alive_neighbors++;     // check W 
+            if(current[i][j+1] == ALIVE) alive_neighbors++;     // check E 
+            if(current[i+1][j-1] == ALIVE) alive_neighbors++;   // check SW
+            if(current[i+1][j] == ALIVE) alive_neighbors++;     // check S 
+            if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
+
+            if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
+                switch(neighbors){
+                    case 2:
+                    case 3:
+                        next[i][j] = ALIVE;
+                        break;
+                    default:
+                        next[i][j] = DEAD;  // die due to underpopulation or overpopulation
+                }
+            } else {        // this cell is not occupied -- DEAD
+                switch(neighbors){
+                    case 3:
+                        next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
+                        break;
+                    default:
+                        next[i][j] = DEAD       // not enough / too many neighbors
+                }
+            }
+        //////////////  RIGHTMOST COLUMN //////////////
+            alive_neighbors = 0;
+            j = width_local;      
+
+            if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
+            if(current[i-1][j] == ALIVE) alive_neighbors++;     // check N 
+            if(current[i-1][j+1] == ALIVE) alive_neighbors++;   // check NE
+            if(current[i][j-1] == ALIVE) alive_neighbors++;     // check W 
+            if(current[i][j+1] == ALIVE) alive_neighbors++;     // check E 
+            if(current[i+1][j-1] == ALIVE) alive_neighbors++;   // check SW
+            if(current[i+1][j] == ALIVE) alive_neighbors++;     // check S 
+            if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
+
+            if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
+                switch(neighbors){
+                    case 2:
+                    case 3:
+                        next[i][j] = ALIVE;
+                        break;
+                    default:
+                        next[i][j] = DEAD;  // die due to underpopulation or overpopulation
+                }
+            } else {        // this cell is not occupied -- DEAD
+                switch(neighbors){
+                    case 3:
+                        next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
+                        break;
+                    default:
+                        next[i][j] = DEAD       // not enough / too many neighbors
+                }
+            }
+        }
+
+        for(j = 1; j < width_local + 1; j++){   // calculating the green rows
+            
+        //////////////  UPPERMOST ROW //////////////
+            neighbors = 0;
+            i = 1;
+
+            if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
+            if(current[i-1][j] == ALIVE) alive_neighbors++;     // check N 
+            if(current[i-1][j+1] == ALIVE) alive_neighbors++;   // check NE
+            if(current[i][j-1] == ALIVE) alive_neighbors++;     // check W 
+            if(current[i][j+1] == ALIVE) alive_neighbors++;     // check E 
+            if(current[i+1][j-1] == ALIVE) alive_neighbors++;   // check SW
+            if(current[i+1][j] == ALIVE) alive_neighbors++;     // check S 
+            if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
+
+            if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
+                switch(neighbors){
+                    case 2:
+                    case 3:
+                        next[i][j] = ALIVE;
+                        break;
+                    default:
+                        next[i][j] = DEAD;  // die due to underpopulation or overpopulation
+                }
+            } else {        // this cell is not occupied -- DEAD
+                switch(neighbors){
+                    case 3:
+                        next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
+                        break;
+                    default:
+                        next[i][j] = DEAD       // not enough / too many neighbors
+                }
+            }
+            //////////////  LOWERMOST ROW //////////////
+            neighbors = 0;
+            i = width_local;
+
+            if(current[i-1][j-1] == ALIVE) alive_neighbors++;   // check NW 
+            if(current[i-1][j] == ALIVE) alive_neighbors++;     // check N 
+            if(current[i-1][j+1] == ALIVE) alive_neighbors++;   // check NE
+            if(current[i][j-1] == ALIVE) alive_neighbors++;     // check W 
+            if(current[i][j+1] == ALIVE) alive_neighbors++;     // check E 
+            if(current[i+1][j-1] == ALIVE) alive_neighbors++;   // check SW
+            if(current[i+1][j] == ALIVE) alive_neighbors++;     // check S 
+            if(current[i+1][j+1] == ALIVE) alive_neighbors++;   // check SE
+
+            if(current[i][j] == ALIVE){     // occupied cell -- ALIVE
+                switch(neighbors){
+                    case 2:
+                    case 3:
+                        next[i][j] = ALIVE;
+                        break;
+                    default:
+                        next[i][j] = DEAD;  // die due to underpopulation or overpopulation
+                }
+            } else {        // this cell is not occupied -- DEAD
+                switch(neighbors){
+                    case 3:
+                        next[i][j] = ALIVE;     // IT'S ALLIIIIIVEE
+                        break;
+                    default:
+                        next[i][j] = DEAD       // not enough / too many neighbors
+                }
+            }
+        }
+
 		MPI_Waitall(8,  SRequests, MPI_STATUSES_IGNORE);
         generation++;        
 	}
+
+    if(my_rank == 0){
+
+        //////////////// PRINT CURRENT ////////////////
+        for(i = 0; i < height_local + 2; i++){
+            for(j = 0; j < width_local + 2; j++){
+                printf("%c ", current[i][j]);
+            }
+            printf("\n");
+        }
+        printf("\n\n");
+        //////////////// PRINT NEXT ////////////////
+        for(i = 0; i < height_local + 2; i++){
+            for(j = 0; j < width_local + 2; j++){
+                printf("%c ", next[i][j]);
+            }
+            printf("\n");
+        }
+    }
 
 	MPI_Comm_free(&cartesian);
 	MPI_Finalize();

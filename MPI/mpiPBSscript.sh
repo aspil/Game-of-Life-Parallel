@@ -4,10 +4,10 @@
 #PBS -l pvmem=2G
 
 # Max Wall time, Example 1 Minute #
-#PBS -l walltime=00:01:00
+#PBS -l walltime=00:00:40
 
 # How many nodes and tasks per node, Example 2 nodes with 8 tasks each => 16 tasts #
-#PBS -l select=1:ncpus=8:mpiprocs=4
+#PBS -l select=8:ncpus=8:mpiprocs=8
 
 # Only this job uses the chosen nodes
 #PBS -l place=excl
@@ -16,9 +16,9 @@
 #PBS -q workq
 
 # JobName #
-#PBS -N myJob_4
+#PBS -N myJob_64_640
 
 #Change Working directory to SUBMIT directory
 cd $PBS_O_WORKDIR
 # Run executable #
-mpirun -n 4 game.x
+mpirun game.x 640

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 n_proc=$1
-
+grid_sz=$2
 if [ $n_proc -le 0 ]; then
 	echo "[$(whoami)]: Please provide a positive number of processes."
 	exit
@@ -17,7 +17,7 @@ if [[ $res_ceil != $res_floor ]]; then
 fi
 
 # Remove the switch argument from mpirun command on mpiPBSscript.sh
-sed -i -e 's/mpirun -n [0-9]* game.x/mpirun game.x/g' mpiPBSscript.sh
+sed -i -e 's/mpirun -n [0-9]* game.x [0-9]*/mpirun game.x '$2'/g' mpiPBSscript.sh
 
 if [[ n_proc -le 4 ]]; then
 	sed -i -e 's/select=[0-9]*/select=1/g' mpiPBSscript.sh
@@ -28,7 +28,7 @@ else
 	sed -i -e 's/select=[0-9]*/select='$nodes'/g' mpiPBSscript.sh
 	sed -i -e 's/mpiprocs=[0-9]*/mpiprocs=8/g' mpiPBSscript.sh
 fi
-sed -i -e 's/#PBS -N myJob_[0-9]*/#PBS -N myJob_'$n_proc'/g' mpiPBSscript.sh
+sed -i -e 's/#PBS -N myJob_[0-9]*_[0-9]*/#PBS -N myJob_'$n_proc'_'$grid_sz'/g' mpiPBSscript.sh
 
 # Finally sumbit the job on the PBS queue
 qsub mpiPBSscript.sh

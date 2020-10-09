@@ -21,4 +21,4 @@
 #Change Working directory to SUBMIT directory
 cd $PBS_O_WORKDIR
 # Run executable #
-mpirun game.x 640
+mpirun game_reduce.x 640

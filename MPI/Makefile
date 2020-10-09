@@ -1,10 +1,16 @@
-game.x: game.c 
-	mpicc -g -Wall -o game.x game.c 
+mpi:
+	mpicc -Wall -o game.x game.c 
+
+mpi_reduce:
+	mpicc -D REDUCE -Wall -o game.x game.c
+
+openmp:
+	# mpicc -D openmp -Wall -o game.x game.c
 
 .PHONY:
-	clean, clean_all
+	clean_mpi, clean_omp
 
-clean:
+clean_mpi:
 	rm -f *.o* *.e* game.x
-# clean:
-# 	rm *.o* *.e*
+
+clean_omp:

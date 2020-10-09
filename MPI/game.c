@@ -185,13 +185,13 @@ int main(int argc, char *argv[]){
 	MPI_Recv_init(&current[height_local+1][width_local+1], 1, MPI_CHAR, neighbours[7], 7, cartesian, &RRequests[7]);
 	
 	// MPI_Status status[8];
-	int alive_neighbors;
+	int alive_neighbors = 0;
 	while (generation < 1) {
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
 
 		/* evolution of inner (white) cells */
-		alive_neighbors = 0;
+		// alive_neighbors = 0;
 		for(i = 2; i < height_local; i++){
 			for(j = 2; j < width_local; j++){
 				// 0-1 or 4-8 => die (underpop or overpop)
@@ -215,7 +215,7 @@ int main(int argc, char *argv[]){
 		}
 
 		MPI_Waitall(8,  RRequests, MPI_STATUSES_IGNORE);
-		alive_neighbors = 0;
+		// alive_neighbors = 0;
 		/* TODO υπολογισμος εξωτερικων κελιων */
 		for(i = 1; i < height_local + 1; i++){   // calculating the green columns
 
@@ -254,7 +254,7 @@ int main(int argc, char *argv[]){
 			
 		}
 
-		alive_neighbors = 0;
+		// alive_neighbors = 0;
 		for(j = 1; j < width_local + 1; j++){   // calculating the green rows
 			
 		//////////////  UPPERMOST ROW //////////////

@@ -5,12 +5,14 @@
 
 #define ALIVE 1
 #define DEAD 0
+#define MAX_GENERATIONS 1000
+
 
 int main(int argc, char *argv[]){
 	srand(time(0));
 
 	MPI_Comm cartesian;     // will be the new communicator
-	int grid_width, comm_sz;       //maybe grid_width should be passed by arg, e.g 64
+	int grid_size, comm_sz;       //maybe grid_size should be passed by arg, e.g 64
 	int my_rank, neighbour_rank, src, dest;
 	int comm_dims[2];       // dimensions of communicator shape, initialized to 0,0
 	int period[2] = {1,1};       // in this implementation, we work on a simple-grid-shaped communicator
@@ -20,11 +22,14 @@ int main(int argc, char *argv[]){
 	// int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
 
 
+#ifdef REDUCE
+    int similarity_counter = 0, empty_counter = 0, sim_sum, e_sum;
+#endif
 	if (argc != 2) {
 		printf("Wrong program arguments. Usage: mpirun [-n] [X] game.x <grid size>\n");
 		return EXIT_FAILURE;
 	}
-	grid_width = atoi(argv[1]);
+	grid_size = atoi(argv[1]);
 
 	MPI_Init(NULL, NULL);   
 	MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
@@ -33,8 +38,8 @@ int main(int argc, char *argv[]){
 	MPI_Dims_create(comm_sz, 2, comm_dims);    // determines a suitable distribution of processes, according to comm_sz
 	MPI_Cart_create(MPI_COMM_WORLD, 2 , comm_dims, period, 0, &cartesian);      // create a new communicator with topology information
 
-	height_local = (int) (grid_width / comm_dims[0]);      // casting is not actually necessary, everything is a power of 2
-	width_local = (int) (grid_width / comm_dims[1]);
+	height_local = (int) (grid_size / comm_dims[0]);      // casting is not actually necessary, everything is a power of 2
+	width_local = (int) (grid_size / comm_dims[1]);
 	/* Allocate the 'before' and 'after' grids */
 	// printf("EDW1\n");
 	char **current = malloc((height_local+2) * sizeof(char*));
@@ -140,7 +145,7 @@ int main(int argc, char *argv[]){
 	char **temp;
 	int alive_neighbors = 0;
 	int generation = 0;
-	while (generation < 500) {
+	while (generation < MAX_GENERATIONS) {
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
 		/* Εvolution of inner (white) cells */
@@ -156,9 +161,12 @@ int main(int argc, char *argv[]){
 								  current[i+1][j+1];
 				if(current[i][j] == ALIVE)
 					next[i][j] = ((alive_neighbors == 2) || (alive_neighbors == 3)) ? ALIVE : DEAD;
-				
 				else
 					next[i][j] = (alive_neighbors == 3) ? ALIVE : DEAD;
+#ifdef REDUCE
+				similarity_counter += current[i][j] ^ next[i][j];	// if 0 at the end of loop, then similar
+				empty_counter += next[i][j];		// if 0 then none is alive => empty
+#endif
 			}
 		}
 
@@ -167,7 +175,7 @@ int main(int argc, char *argv[]){
 		for(i = 1; i < height_local + 1; i++){   // calculating the green columns
 			/*-------------  Leftmost column -------------*/
 			alive_neighbors = current[i-1][0] +
-						      current[i-1][1] +
+							  current[i-1][1] +
 							  current[i-1][2] +
 							  current[i][0]   +
 							  current[i][2]   +
@@ -179,10 +187,13 @@ int main(int argc, char *argv[]){
 				next[i][1] = ((alive_neighbors == 2) || (alive_neighbors == 3)) ? ALIVE : DEAD;
 			else
 				next[i][1] = (alive_neighbors == 3) ? ALIVE : DEAD;
-			
+#ifdef REDUCE
+			similarity_counter += current[i][1] ^ next[i][1];	// if 0 at the end of loop, then similar
+			empty_counter += next[i][1];		// if 0 then none is alive => empty
+#endif
 			/*-------------  Rightmost column -------------*/
 			alive_neighbors = current[i-1][width_local-1] +
-						      current[i-1][width_local]   +
+							  current[i-1][width_local]   +
 							  current[i-1][width_local+1] +
 							  current[i][width_local-1]   +
 							  current[i][width_local+1]   +
@@ -194,13 +205,16 @@ int main(int argc, char *argv[]){
 				next[i][width_local] = ((alive_neighbors == 2) || (alive_neighbors == 3)) ? ALIVE : DEAD;
 			else
 				next[i][width_local] = (alive_neighbors == 3) ? ALIVE : DEAD;
-			
+#ifdef REDUCE
+			similarity_counter += current[i][width_local] ^ next[i][width_local];	// if not 0 at the end of loop, then similar
+			empty_counter += next[i][width_local];		// if 0 then none is alive => empty
+#endif
 		}
 
 		for(j = 1; j < width_local + 1; j++){   // calculating the green rows
 			/* -------------- Uppermost row --------------*/
 			alive_neighbors = current[0][j-1] +
-						      current[0][j]   +
+							  current[0][j]   +
 							  current[0][j+1] +
 							  current[1][j-1] +
 							  current[1][j+1] +
@@ -212,10 +226,13 @@ int main(int argc, char *argv[]){
 				next[1][j] = ((alive_neighbors == 2) || (alive_neighbors == 3)) ? ALIVE : DEAD;
 			else
 				next[1][j] = (alive_neighbors == 3) ? ALIVE : DEAD;
-			
+#ifdef REDUCE
+			similarity_counter += current[1][j] ^ next[1][j];	// if 0 at the end of loop, then similar
+			empty_counter += next[1][j];		// if 0 then none is alive => empty
+#endif
 			/* -------------- Lowermost row --------------*/
 			alive_neighbors = current[height_local-1][j-1] +
-						      current[height_local-1][j]   +
+							  current[height_local-1][j]   +
 							  current[height_local-1][j+1] +
 							  current[height_local][j-1]   +
 							  current[height_local][j+1]   +
@@ -227,13 +244,30 @@ int main(int argc, char *argv[]){
 				next[height_local][j] = ((alive_neighbors == 2) || (alive_neighbors == 3)) ? ALIVE : DEAD;
 			else
 				next[height_local][j] = (alive_neighbors == 3) ? ALIVE : DEAD;
+#ifdef REDUCE
+			similarity_counter += current[height_local][j] ^ next[height_local][j];	// if 0 at the end of loop, then similar
+			empty_counter += next[height_local][j];		// if 0 then none is alive => empty
+#endif
 		}
 
 		MPI_Waitall(8,  SRequests, MPI_STATUSES_IGNORE);
 		generation++; 
 		temp = current;
 		current = next;
-		next = temp;       
+		next = temp;
+
+#ifdef REDUCE
+		if (generation % 10 == 0) {
+			MPI_Allreduce(&similarity_counter, &sim_sum, 1, MPI_INT, MPI_SUM, cartesian);
+			MPI_Allreduce(&empty_counter, &e_sum , 1, MPI_INT, MPI_SUM, cartesian);
+			// if (sim_sum == 0) {
+			// 	// Similar grids
+			// }
+			// if (!e_sum) {
+			// 	// Empty grid
+			// }
+		}
+#endif      
 	}	/* End of main loop */
 
 	if(my_rank == 0){

@@ -2,10 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <mpi.h>
+#include <omp.h>
 
 #define ALIVE 1
 #define DEAD 0
-#define MAX_GENERATIONS 1000
+#define MAX_GENERATIONS 100
 
 
 int main(int argc, char *argv[]){
@@ -56,7 +57,7 @@ int main(int argc, char *argv[]){
 	/* Initialize the 'before' or current subgrid */
 	for (i = 1; i < height_local + 1; i++)
 		for (j = 1; j < width_local + 1; j++)
-			current[i][j] = (rand() % 10) < 7 ? DEAD : ALIVE;	// dead : alive ratio 7:3
+			current[i][j] = (rand() % 10) < 8 ? DEAD : ALIVE;	// dead : alive ratio 7:3
 
 	/* Get the coordinates for the current process */
 	int my_coords[2];
@@ -132,19 +133,13 @@ int main(int argc, char *argv[]){
 	MPI_Recv_init(&(current[height_local+1][width_local+1]), 1, MPI_CHAR, neighbours[7], 0, cartesian, &RRequests[7]);
 	MPI_Send_init(&(current[height_local][width_local]), 	 1, MPI_CHAR, neighbours[7], 0, cartesian, &SRequests[7]);
 	
-	if(my_rank == 0){
-		printf("Before\n");
-		for(i = 0; i < height_local + 2; i++){
-			for(j = 0; j < width_local + 2; j++){
-				printf("%c ", current[i][j] == ALIVE ? 'x' : '_');
-			}
-			printf("\n");
-		}
-		printf("\n\n");
-	}
 	char **temp;
 	int alive_neighbors = 0;
 	int generation = 0;
+	MPI_Barrier(cartesian);
+	double time_start = MPI_Wtime();
+	MPI_Pcontrol(1);
+
 	while (generation < MAX_GENERATIONS) {
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
@@ -269,15 +264,10 @@ int main(int argc, char *argv[]){
 		}
 #endif      
 	}	/* End of main loop */
-
-	if(my_rank == 0){
-		printf("After\n");
-		for(i = 0; i < height_local + 2; i++){
-			for(j = 0; j < width_local + 2; j++){
-				printf("%c ", next[i][j] == ALIVE ? 'x' : '_');
-			}
-			printf("\n");
-		}
+	MPI_Pcontrol(0);
+	double time_end = MPI_Wtime();
+	if(my_rank == 0) {
+		printf("Time elapsed = %f\n", time_end- time_start);
 	}
 	MPI_Type_free(&column);
 	MPI_Comm_free(&cartesian);

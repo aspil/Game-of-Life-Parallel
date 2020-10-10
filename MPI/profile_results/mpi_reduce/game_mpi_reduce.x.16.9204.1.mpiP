@@ -1,0 +1,177 @@
+@ mpiP
+@ Command : game_mpi_reduce.x 5120 
+@ Version                  : 3.4.1
+@ MPIP Build date          : Oct 27 2018, 17:18:21
+@ Start time               : 2020 10 10 04:49:35
+@ Stop time                : 2020 10 10 04:49:37
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -t 10.0 -f profile_results/mpi_reduce -o
+@ Collector Rank           : 0
+@ Collector PID            : 9204
+@ Final Output Dir         : profile_results/mpi_reduce
+@ Report generation        : Single collector task
+@ MPI Task Assignment      : 0 argo-c5
+@ MPI Task Assignment      : 1 argo-c5
+@ MPI Task Assignment      : 2 argo-c5
+@ MPI Task Assignment      : 3 argo-c5
+@ MPI Task Assignment      : 4 argo-c5
+@ MPI Task Assignment      : 5 argo-c5
+@ MPI Task Assignment      : 6 argo-c5
+@ MPI Task Assignment      : 7 argo-c5
+@ MPI Task Assignment      : 8 argo-c0
+@ MPI Task Assignment      : 9 argo-c0
+@ MPI Task Assignment      : 10 argo-c0
+@ MPI Task Assignment      : 11 argo-c0
+@ MPI Task Assignment      : 12 argo-c0
+@ MPI Task Assignment      : 13 argo-c0
+@ MPI Task Assignment      : 14 argo-c0
+@ MPI Task Assignment      : 15 argo-c0
+
+---------------------------------------------------------------------------
+@--- MPI Time (seconds) ---------------------------------------------------
+---------------------------------------------------------------------------
+Task    AppTime    MPITime     MPI%
+   0       2.14     0.0935     4.37
+   1       2.14     0.0926     4.33
+   2       2.14      0.094     4.39
+   3       2.14     0.0895     4.18
+   4       2.14     0.0959     4.48
+   5       2.14     0.0964     4.50
+   6       2.14      0.095     4.44
+   7       2.14     0.0924     4.32
+   8       2.14     0.0903     4.21
+   9       2.14     0.0939     4.38
+  10       2.14     0.0923     4.31
+  11       2.14     0.0932     4.35
+  12       2.14     0.0958     4.47
+  13       2.14     0.0926     4.32
+  14       2.14     0.0924     4.31
+  15       2.14     0.0926     4.33
+   *       34.3       1.49     4.36
+---------------------------------------------------------------------------
+@--- Callsites: 6 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 game.c               255 main                     Allreduce
+  2   0 game.c               256 main                     Allreduce
+  3   0 game.c               247 main                     Waitall
+  4   0 game.c               167 main                     Waitall
+  5   0 game.c               144 main                     Startall
+  6   0 game.c               143 main                     Startall
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%     COV
+Waitall                 4        657    1.92   44.00    0.05
+Startall                5        442    1.29   29.58    0.04
+Allreduce               1        146    0.43    9.76    0.41
+Waitall                 3        105    0.31    7.06    0.42
+Allreduce               2       87.4    0.26    5.85    0.19
+Startall                6       55.9    0.16    3.75    0.24
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Allreduce               2        480   1.92e+03          4  50.00
+Allreduce               1        480   1.92e+03          4  50.00
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all, milliseconds): 96 ---------------------
+---------------------------------------------------------------------------
+Name              Site Rank  Count      Max     Mean      Min   App%   MPI%
+Allreduce            1    8     30    0.609    0.354     0.18   0.50  11.76
+Allreduce            1    9     30    0.597    0.374    0.191   0.52  11.94
+Allreduce            1   10     30    0.624    0.357    0.186   0.50  11.59
+Allreduce            1   11     30    0.566    0.373    0.223   0.52  12.01
+Allreduce            1   12     30    0.964    0.556    0.245   0.78  17.40
+Allreduce            1   13     30     0.86    0.398    0.151   0.56  12.88
+Allreduce            1   14     30    0.919    0.494   0.0317   0.69  16.04
+Allreduce            1   15     30    0.615    0.399    0.159   0.56  12.94
+Allreduce            1    *    480    0.964    0.304   0.0317   0.43   9.76
+
+Allreduce            2    *    480     0.35    0.182   0.0105   0.26   5.85
+
+Startall             5    0    300    0.606   0.0847   0.0443   1.19  27.15
+Startall             5    1    300    0.728   0.0946   0.0437   1.33  30.65
+Startall             5    2    300    0.421   0.0899    0.043   1.26  28.69
+Startall             5    3    300    0.752   0.0931   0.0437   1.30  31.19
+Startall             5    4    300    0.589    0.096   0.0435   1.34  30.03
+Startall             5    5    300    0.698   0.0995   0.0442   1.39  30.96
+Startall             5    6    300    0.583   0.0894   0.0425   1.25  28.22
+Startall             5    7    300    0.475   0.0933   0.0445   1.31  30.29
+Startall             5    8    300    0.572   0.0896   0.0478   1.25  29.77
+Startall             5    9    300    0.752   0.0952   0.0502   1.33  30.41
+Startall             5   10    300    0.463   0.0943   0.0479   1.32  30.64
+Startall             5   11    300    0.601   0.0933   0.0497   1.31  30.05
+Startall             5   12    300    0.764   0.0876    0.049   1.23  27.43
+Startall             5   13    300    0.722   0.0922    0.046   1.29  29.88
+Startall             5   14    300    0.671   0.0844   0.0441   1.18  27.42
+Startall             5   15    300    0.783   0.0946   0.0469   1.32  30.63
+Startall             5    *   4800    0.783    0.092   0.0425   1.29  29.58
+
+Startall             6    *   4800    0.798   0.0116  0.00212   0.16   3.75
+
+Waitall              3    0    300    0.348   0.0374  0.00108   0.52  11.98
+Waitall              3    2    300    0.273    0.037 0.000987   0.52  11.82
+Waitall              3    4    300    0.376   0.0321 0.000936   0.45  10.04
+Waitall              3    6    300    0.347   0.0366 0.000918   0.51  11.54
+Waitall              3    *   4800    0.391   0.0219 0.000854   0.31   7.06
+
+Waitall              4    0    300     1.07    0.137  0.00684   1.92  43.97
+Waitall              4    1    300     1.24    0.147  0.00541   2.06  47.60
+Waitall              4    2    300     1.28    0.133  0.00541   1.87  42.58
+Waitall              4    3    300     1.02    0.135  0.00358   1.89  45.31
+Waitall              4    4    300    0.995    0.135  0.00395   1.90  42.32
+Waitall              4    5    300     1.74    0.148  0.00552   2.07  46.02
+Waitall              4    6    300     1.37    0.139  0.00385   1.95  43.93
+Waitall              4    7    300     1.05    0.139  0.00474   1.94  45.05
+Waitall              4    8    300     1.31    0.138   0.0612   1.94  45.99
+Waitall              4    9    300     1.35    0.143   0.0559   2.00  45.73
+Waitall              4   10    300     1.71    0.139   0.0624   1.95  45.25
+Waitall              4   11    300     1.27    0.142   0.0376   1.98  45.60
+Waitall              4   12    300     1.06    0.126   0.0772   1.77  39.53
+Waitall              4   13    300     1.04    0.132  0.00509   1.84  42.61
+Waitall              4   14    300     1.09    0.128  0.00513   1.79  41.45
+Waitall              4   15    300     1.01    0.128  0.00579   1.79  41.33
+Waitall              4    *   4800     1.74    0.137  0.00358   1.92  44.00
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all, sent bytes) -------------------
+---------------------------------------------------------------------------
+Name              Site Rank   Count       Max      Mean       Min       Sum
+Allreduce            1    0      30         4         4         4       120
+Allreduce            1    1      30         4         4         4       120
+Allreduce            1    2      30         4         4         4       120
+Allreduce            1    3      30         4         4         4       120
+Allreduce            1    4      30         4         4         4       120
+Allreduce            1    5      30         4         4         4       120
+Allreduce            1    6      30         4         4         4       120
+Allreduce            1    7      30         4         4         4       120
+Allreduce            1    8      30         4         4         4       120
+Allreduce            1    9      30         4         4         4       120
+Allreduce            1   10      30         4         4         4       120
+Allreduce            1   11      30         4         4         4       120
+Allreduce            1   12      30         4         4         4       120
+Allreduce            1   13      30         4         4         4       120
+Allreduce            1   14      30         4         4         4       120
+Allreduce            1   15      30         4         4         4       120
+Allreduce            1    *     480         4         4         4      1920
+
+Allreduce            2    0      30         4         4         4       120
+Allreduce            2    1      30         4         4         4       120
+Allreduce            2    2      30         4         4         4       120
+Allreduce            2    3      30         4         4         4       120
+Allreduce            2    4      30         4         4         4       120
+Allreduce            2    5      30         4         4         4       120
+Allreduce            2    6      30         4         4         4       120
+Allreduce            2    7      30         4         4         4       120
+Allreduce            2    8      30         4         4         4       120
+Allreduce            2    9      30         4         4         4       120
+Allreduce            2   10      30         4         4         4       120
+Allreduce            2   11      30         4         4         4       120
+Allreduce            2   12      30         4         4         4       120
+Allreduce            2   13      30         4         4         4       120
+Allreduce            2   14      30         4         4         4       120
+Allreduce            2   15      30         4         4         4       120
+Allreduce            2    *     480         4         4         4      1920
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

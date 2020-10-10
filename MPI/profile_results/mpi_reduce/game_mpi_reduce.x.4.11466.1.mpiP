@@ -1,0 +1,94 @@
+@ mpiP
+@ Command : game_mpi_reduce.x 5120 
+@ Version                  : 3.4.1
+@ MPIP Build date          : Oct 27 2018, 17:18:21
+@ Start time               : 2020 10 10 04:55:54
+@ Stop time                : 2020 10 10 04:56:02
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -t 10.0 -f profile_results/mpi_reduce -o
+@ Collector Rank           : 0
+@ Collector PID            : 11466
+@ Final Output Dir         : profile_results/mpi_reduce
+@ Report generation        : Single collector task
+@ MPI Task Assignment      : 0 argo-c2
+@ MPI Task Assignment      : 1 argo-c2
+@ MPI Task Assignment      : 2 argo-c2
+@ MPI Task Assignment      : 3 argo-c2
+
+---------------------------------------------------------------------------
+@--- MPI Time (seconds) ---------------------------------------------------
+---------------------------------------------------------------------------
+Task    AppTime    MPITime     MPI%
+   0       8.19      0.103     1.25
+   1       8.19     0.0987     1.21
+   2       8.19     0.0929     1.13
+   3       8.19      0.107     1.31
+   *       32.8      0.401     1.22
+---------------------------------------------------------------------------
+@--- Callsites: 6 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 game.c               255 main                     Allreduce
+  2   0 game.c               256 main                     Allreduce
+  3   0 game.c               247 main                     Waitall
+  4   0 game.c               167 main                     Waitall
+  5   0 game.c               144 main                     Startall
+  6   0 game.c               143 main                     Startall
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%     COV
+Waitall                 4        292    0.89   72.69    0.04
+Startall                5       57.5    0.18   14.34    0.03
+Waitall                 3       21.3    0.06    5.30    1.05
+Allreduce               1       19.9    0.06    4.97    0.56
+Startall                6       9.92    0.03    2.47    0.10
+Allreduce               2      0.934    0.00    0.23    0.28
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Allreduce               2        120        480          4  50.00
+Allreduce               1        120        480          4  50.00
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all, milliseconds): 24 ---------------------
+---------------------------------------------------------------------------
+Name              Site Rank  Count      Max     Mean      Min   App%   MPI%
+Allreduce            1    *    120    0.302    0.166   0.0183   0.06   4.97
+
+Allreduce            2    *    120   0.0296  0.00779   0.0017   0.00   0.23
+
+Startall             5    0    300    0.181     0.05    0.043   0.18  14.62
+Startall             5    1    300    0.144   0.0461   0.0412   0.17  14.02
+Startall             5    2    300    0.182   0.0472   0.0423   0.17  15.24
+Startall             5    3    300    0.169   0.0484    0.043   0.18  13.57
+Startall             5    *   1200    0.182   0.0479   0.0412   0.18  14.34
+
+Startall             6    *   1200    0.661  0.00827  0.00303   0.03   2.47
+
+Waitall              3    3    300    0.166   0.0386  0.00106   0.14  10.83
+Waitall              3    *   1200    0.166   0.0177 0.000496   0.06   5.30
+
+Waitall              4    0    300     0.35    0.233   0.0281   0.85  68.06
+Waitall              4    1    300    0.377    0.251   0.0324   0.92  76.32
+Waitall              4    2    300    0.341    0.249   0.0268   0.91  80.52
+Waitall              4    3    300    0.347    0.239    0.225   0.87  66.98
+Waitall              4    *   1200    0.377    0.243   0.0268   0.89  72.69
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all, sent bytes) -------------------
+---------------------------------------------------------------------------
+Name              Site Rank   Count       Max      Mean       Min       Sum
+Allreduce            1    0      30         4         4         4       120
+Allreduce            1    1      30         4         4         4       120
+Allreduce            1    2      30         4         4         4       120
+Allreduce            1    3      30         4         4         4       120
+Allreduce            1    *     120         4         4         4       480
+
+Allreduce            2    0      30         4         4         4       120
+Allreduce            2    1      30         4         4         4       120
+Allreduce            2    2      30         4         4         4       120
+Allreduce            2    3      30         4         4         4       120
+Allreduce            2    *     120         4         4         4       480
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

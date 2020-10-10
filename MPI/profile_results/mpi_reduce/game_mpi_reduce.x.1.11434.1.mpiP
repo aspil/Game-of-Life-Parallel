@@ -1,0 +1,74 @@
+@ mpiP
+@ Command : game_mpi_reduce.x 1280 
+@ Version                  : 3.4.1
+@ MPIP Build date          : Oct 27 2018, 17:18:21
+@ Start time               : 2020 10 10 04:55:51
+@ Stop time                : 2020 10 10 04:55:53
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -t 10.0 -f profile_results/mpi_reduce -o
+@ Collector Rank           : 0
+@ Collector PID            : 11434
+@ Final Output Dir         : profile_results/mpi_reduce
+@ Report generation        : Single collector task
+@ MPI Task Assignment      : 0 argo-c2
+
+---------------------------------------------------------------------------
+@--- MPI Time (seconds) ---------------------------------------------------
+---------------------------------------------------------------------------
+Task    AppTime    MPITime     MPI%
+   0       2.01     0.0115     0.57
+   *       2.01     0.0115     0.57
+---------------------------------------------------------------------------
+@--- Callsites: 6 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 game.c               255 main                     Allreduce
+  2   0 game.c               256 main                     Allreduce
+  3   0 game.c               247 main                     Waitall
+  4   0 game.c               167 main                     Waitall
+  5   0 game.c               144 main                     Startall
+  6   0 game.c               143 main                     Startall
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%     COV
+Startall                5       10.1    0.51   88.24    0.00
+Startall                6      0.867    0.04    7.55    0.00
+Waitall                 4      0.286    0.01    2.49    0.00
+Waitall                 3      0.146    0.01    1.27    0.00
+Allreduce               1      0.045    0.00    0.39    0.00
+Allreduce               2    0.00695    0.00    0.06    0.00
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Allreduce               2         30        120          4  50.00
+Allreduce               1         30        120          4  50.00
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all, milliseconds): 6 ----------------------
+---------------------------------------------------------------------------
+Name              Site Rank  Count      Max     Mean      Min   App%   MPI%
+Allreduce            1    *     30   0.0283   0.0015  0.00053   0.00   0.39
+
+Allreduce            2    *     30  0.00062 0.000232 0.000216   0.00   0.06
+
+Startall             5    0    300    0.181   0.0338   0.0319   0.51  88.24
+Startall             5    *    300    0.181   0.0338   0.0319   0.51  88.24
+
+Startall             6    *    300    0.554  0.00289    0.001   0.04   7.55
+
+Waitall              3    *    300 0.000779 0.000485  0.00046   0.01   1.27
+
+Waitall              4    *    300   0.0291 0.000955 0.000827   0.01   2.49
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all, sent bytes) -------------------
+---------------------------------------------------------------------------
+Name              Site Rank   Count       Max      Mean       Min       Sum
+Allreduce            1    0      30         4         4         4       120
+Allreduce            1    *      30         4         4         4       120
+
+Allreduce            2    0      30         4         4         4       120
+Allreduce            2    *      30         4         4         4       120
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

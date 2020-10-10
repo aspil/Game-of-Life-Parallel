@@ -1,0 +1,11 @@
+mpiP: Found MPIP environment variable [-t 10.0 -f profile_results/mpi_reduce -o]
+mpiP: Set the report print threshold to [10.00%].
+mpiP: Set the output directory to [profile_results/mpi_reduce].
+mpiP: 
+mpiP: mpiP: mpiP V3.4.1 (Build Oct 27 2018/17:18:21)
+mpiP: Direct questions and errors to mpip-help@lists.sourceforge.net
+mpiP: 
+Time elapsed = 1.016086
+mpiP: 
+mpiP: Storing mpiP output in [profile_results/mpi_reduce/game_mpi_reduce.x.8.23652.1.mpiP].
+mpiP: 

@@ -1,0 +1,306 @@
+@ mpiP
+@ Command : game_mpi.x 10240 ®o 
+@ Version                  : 3.4.1
+@ MPIP Build date          : Oct 27 2018, 17:18:21
+@ Start time               : 2020 10 10 04:49:12
+@ Stop time                : 2020 10 10 04:49:14
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -t 10.0 -f profile_results/mpi -o
+@ Collector Rank           : 0
+@ Collector PID            : 22617
+@ Final Output Dir         : profile_results/mpi
+@ Report generation        : Single collector task
+@ MPI Task Assignment      : 0 argo-c4
+@ MPI Task Assignment      : 1 argo-c4
+@ MPI Task Assignment      : 2 argo-c4
+@ MPI Task Assignment      : 3 argo-c4
+@ MPI Task Assignment      : 4 argo-c4
+@ MPI Task Assignment      : 5 argo-c4
+@ MPI Task Assignment      : 6 argo-c4
+@ MPI Task Assignment      : 7 argo-c4
+@ MPI Task Assignment      : 8 argo-c1
+@ MPI Task Assignment      : 9 argo-c1
+@ MPI Task Assignment      : 10 argo-c1
+@ MPI Task Assignment      : 11 argo-c1
+@ MPI Task Assignment      : 12 argo-c1
+@ MPI Task Assignment      : 13 argo-c1
+@ MPI Task Assignment      : 14 argo-c1
+@ MPI Task Assignment      : 15 argo-c1
+@ MPI Task Assignment      : 16 argo-c2
+@ MPI Task Assignment      : 17 argo-c2
+@ MPI Task Assignment      : 18 argo-c2
+@ MPI Task Assignment      : 19 argo-c2
+@ MPI Task Assignment      : 20 argo-c2
+@ MPI Task Assignment      : 21 argo-c2
+@ MPI Task Assignment      : 22 argo-c2
+@ MPI Task Assignment      : 23 argo-c2
+@ MPI Task Assignment      : 24 argo-c5
+@ MPI Task Assignment      : 25 argo-c5
+@ MPI Task Assignment      : 26 argo-c5
+@ MPI Task Assignment      : 27 argo-c5
+@ MPI Task Assignment      : 28 argo-c5
+@ MPI Task Assignment      : 29 argo-c5
+@ MPI Task Assignment      : 30 argo-c5
+@ MPI Task Assignment      : 31 argo-c5
+@ MPI Task Assignment      : 32 argo-c6
+@ MPI Task Assignment      : 33 argo-c6
+@ MPI Task Assignment      : 34 argo-c6
+@ MPI Task Assignment      : 35 argo-c6
+@ MPI Task Assignment      : 36 argo-c6
+@ MPI Task Assignment      : 37 argo-c6
+@ MPI Task Assignment      : 38 argo-c6
+@ MPI Task Assignment      : 39 argo-c6
+@ MPI Task Assignment      : 40 argo-c0
+@ MPI Task Assignment      : 41 argo-c0
+@ MPI Task Assignment      : 42 argo-c0
+@ MPI Task Assignment      : 43 argo-c0
+@ MPI Task Assignment      : 44 argo-c0
+@ MPI Task Assignment      : 45 argo-c0
+@ MPI Task Assignment      : 46 argo-c0
+@ MPI Task Assignment      : 47 argo-c0
+@ MPI Task Assignment      : 48 argo-c7
+@ MPI Task Assignment      : 49 argo-c7
+@ MPI Task Assignment      : 50 argo-c7
+@ MPI Task Assignment      : 51 argo-c7
+@ MPI Task Assignment      : 52 argo-c7
+@ MPI Task Assignment      : 53 argo-c7
+@ MPI Task Assignment      : 54 argo-c7
+@ MPI Task Assignment      : 55 argo-c7
+@ MPI Task Assignment      : 56 argo-c9
+@ MPI Task Assignment      : 57 argo-c9
+@ MPI Task Assignment      : 58 argo-c9
+@ MPI Task Assignment      : 59 argo-c9
+@ MPI Task Assignment      : 60 argo-c9
+@ MPI Task Assignment      : 61 argo-c9
+@ MPI Task Assignment      : 62 argo-c9
+@ MPI Task Assignment      : 63 argo-c9
+
+---------------------------------------------------------------------------
+@--- MPI Time (seconds) ---------------------------------------------------
+---------------------------------------------------------------------------
+Task    AppTime    MPITime     MPI%
+   0       1.88      0.126     6.71
+   1       1.88      0.126     6.73
+   2       1.88      0.122     6.51
+   3       1.88      0.125     6.66
+   4       1.88      0.126     6.71
+   5       1.88      0.127     6.78
+   6       1.88       0.13     6.89
+   7       1.88      0.125     6.65
+   8       1.88      0.158     8.44
+   9       1.88      0.159     8.49
+  10       1.88      0.158     8.45
+  11       1.88      0.155     8.25
+  12       1.88      0.158     8.45
+  13       1.88      0.159     8.50
+  14       1.88      0.157     8.39
+  15       1.88      0.157     8.38
+  16       1.87      0.151     8.08
+  17       1.87      0.154     8.23
+  18       1.87      0.154     8.24
+  19       1.87      0.154     8.23
+  20       1.87      0.157     8.38
+  21       1.87      0.154     8.23
+  22       1.87      0.151     8.09
+  23       1.87       0.15     8.01
+  24       1.86      0.149     8.01
+  25       1.86      0.149     7.97
+  26       1.86      0.146     7.85
+  27       1.86      0.149     7.98
+  28       1.86      0.146     7.85
+  29       1.86       0.15     8.03
+  30       1.86      0.148     7.94
+  31       1.86      0.146     7.85
+  32       1.86       0.14     7.52
+  33       1.86      0.145     7.82
+  34       1.86      0.144     7.73
+  35       1.86      0.146     7.83
+  36       1.86      0.151     8.11
+  37       1.86      0.143     7.67
+  38       1.86      0.146     7.83
+  39       1.86      0.148     7.96
+  40       1.86      0.145     7.79
+  41       1.86      0.147     7.89
+  42       1.86      0.145     7.77
+  43       1.86      0.147     7.89
+  44       1.86      0.147     7.89
+  45       1.86      0.147     7.88
+  46       1.86      0.146     7.83
+  47       1.86      0.147     7.87
+  48       1.87      0.155     8.27
+  49       1.87      0.151     8.06
+  50       1.87      0.156     8.35
+  51       1.87       0.15     8.02
+  52       1.87       0.15     8.05
+  53       1.87      0.153     8.18
+  54       1.87      0.155     8.31
+  55       1.87      0.153     8.18
+  56       1.88      0.157     8.36
+  57       1.88      0.156     8.29
+  58       1.88      0.155     8.25
+  59       1.88      0.157     8.39
+  60       1.88      0.159     8.45
+  61       1.88      0.156     8.30
+  62       1.88      0.156     8.32
+  63       1.88      0.159     8.47
+   *        120       9.49     7.93
+---------------------------------------------------------------------------
+@--- Callsites: 4 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 game.c               257 main                     Waitall
+  2   0 game.c               154 main                     Startall
+  3   0 game.c               153 main                     Startall
+  4   0 game.c               177 main                     Waitall
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%     COV
+Waitall                 4   6.97e+03    5.82   73.42    0.14
+Startall                2   2.15e+03    1.80   22.67    0.09
+Startall                3        251    0.21    2.64    0.33
+Waitall                 1        120    0.10    1.27    1.56
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all, milliseconds): 256 --------------------
+---------------------------------------------------------------------------
+Name              Site Rank  Count      Max     Mean      Min   App%   MPI%
+Startall             2    0    300     1.19    0.124   0.0677   1.98  29.54
+Startall             2    1    300     1.24    0.135   0.0652   2.15  32.04
+Startall             2    2    300    0.928    0.137   0.0666   2.18  33.47
+Startall             2    3    300     1.16     0.13   0.0732   2.07  31.07
+Startall             2    4    300     1.09    0.143   0.0699   2.29  34.10
+Startall             2    5    300     1.67    0.141   0.0648   2.26  33.31
+Startall             2    6    300     1.15    0.135   0.0709   2.16  31.36
+Startall             2    7    300      1.1    0.143   0.0779   2.29  34.40
+Startall             2    8    300     0.86    0.106   0.0699   1.69  19.99
+Startall             2    9    300     1.11    0.109     0.07   1.74  20.48
+Startall             2   10    300    0.919    0.102   0.0662   1.63  19.29
+Startall             2   11    300     1.08    0.105   0.0687   1.68  20.40
+Startall             2   12    300    0.967    0.104   0.0654   1.66  19.65
+Startall             2   13    300     1.09     0.11   0.0728   1.76  20.67
+Startall             2   14    300     1.04    0.112   0.0682   1.79  21.35
+Startall             2   15    300     1.01    0.108    0.073   1.72  20.57
+Startall             2   16    300    0.998    0.101   0.0685   1.63  20.13
+Startall             2   17    300    0.786    0.109   0.0721   1.75  21.23
+Startall             2   18    300    0.738    0.106   0.0647   1.71  20.73
+Startall             2   19    300     1.01    0.103   0.0697   1.65  20.06
+Startall             2   20    300     1.04    0.105   0.0709   1.69  20.11
+Startall             2   21    300    0.824    0.108   0.0692   1.74  21.08
+Startall             2   22    300    0.968     0.11   0.0675   1.77  21.85
+Startall             2   23    300      1.1    0.108    0.073   1.73  21.60
+Startall             2   24    300     1.26    0.117   0.0736   1.89  23.55
+Startall             2   25    300     0.86    0.114   0.0741   1.84  23.11
+Startall             2   26    300    0.981     0.11   0.0724   1.77  22.52
+Startall             2   27    300    0.806    0.108   0.0726   1.74  21.76
+Startall             2   28    300    0.799    0.113   0.0745   1.81  23.10
+Startall             2   29    300     1.06    0.111   0.0721   1.78  22.18
+Startall             2   30    300     1.01    0.107    0.074   1.72  21.66
+Startall             2   31    300    0.816    0.107   0.0729   1.73  21.97
+Startall             2   32    300    0.916    0.108   0.0628   1.74  23.20
+Startall             2   33    300    0.879    0.108   0.0649   1.74  22.23
+Startall             2   34    300    0.946    0.113   0.0682   1.82  23.58
+Startall             2   35    300    0.911    0.107   0.0703   1.73  22.14
+Startall             2   36    300     1.15    0.109    0.074   1.76  21.68
+Startall             2   37    300     0.81    0.111    0.074   1.79  23.39
+Startall             2   38    300     1.06    0.105   0.0673   1.70  21.68
+Startall             2   39    300    0.821    0.109   0.0727   1.76  22.06
+Startall             2   40    300    0.843     0.11   0.0715   1.77  22.70
+Startall             2   41    300     1.21    0.113   0.0754   1.81  23.00
+Startall             2   42    300    0.925    0.108   0.0679   1.74  22.44
+Startall             2   43    300     0.97    0.113   0.0735   1.82  23.11
+Startall             2   44    300    0.905    0.107   0.0734   1.72  21.77
+Startall             2   45    300     1.18    0.113   0.0723   1.82  23.10
+Startall             2   46    300     0.91    0.109   0.0703   1.75  22.36
+Startall             2   47    300     1.12    0.112   0.0699   1.81  22.99
+Startall             2   48    300     1.07    0.112   0.0734   1.79  21.67
+Startall             2   49    300     1.08    0.106   0.0746   1.70  21.05
+Startall             2   50    300    0.797    0.109   0.0743   1.75  20.94
+Startall             2   51    300     0.91    0.101   0.0715   1.63  20.29
+Startall             2   52    300    0.923    0.108    0.071   1.74  21.60
+Startall             2   53    300     1.06    0.106   0.0633   1.70  20.75
+Startall             2   54    300     1.03    0.109   0.0692   1.75  21.03
+Startall             2   55    300    0.905    0.112   0.0791   1.80  21.98
+Startall             2   56    300    0.919    0.118   0.0725   1.89  22.59
+Startall             2   57    300    0.924      0.1    0.067   1.60  19.30
+Startall             2   58    300     1.05    0.111   0.0697   1.77  21.47
+Startall             2   59    300    0.866    0.103   0.0662   1.64  19.61
+Startall             2   60    300    0.864    0.111   0.0677   1.77  20.92
+Startall             2   61    300    0.763    0.107   0.0695   1.71  20.64
+Startall             2   62    300     1.02    0.116   0.0744   1.86  22.29
+Startall             2   63    300     1.01    0.105   0.0701   1.68  19.79
+Startall             2    *  19200     1.67    0.112   0.0628   1.80  22.67
+
+Startall             3    *  19200    0.968   0.0131  0.00212   0.21   2.64
+
+Waitall              1    0    300     0.47   0.0528   0.0013   0.84  12.55
+Waitall              1    6    300    0.458   0.0548 0.000989   0.87  12.69
+Waitall              1    *  19200     3.16  0.00626 0.000888   0.10   1.27
+
+Waitall              4    0    300      1.4     0.22    0.148   3.50  52.16
+Waitall              4    1    300     2.24    0.262    0.116   4.20  62.37
+Waitall              4    2    300     1.67    0.228   0.0129   3.63  55.82
+Waitall              4    3    300     1.83    0.242  0.00802   3.86  57.93
+Waitall              4    4    300     1.77    0.232    0.131   3.70  55.15
+Waitall              4    5    300     1.76    0.263    0.113   4.21  62.02
+Waitall              4    6    300     1.79    0.215    0.128   3.43  49.84
+Waitall              4    7    300     1.82    0.246    0.126   3.92  58.95
+Waitall              4    8    300     2.61    0.407   0.0851   6.51  77.12
+Waitall              4    9    300      1.9    0.408    0.128   6.53  76.90
+Waitall              4   10    300     2.59    0.414   0.0888   6.62  78.38
+Waitall              4   11    300     1.93    0.399    0.123   6.38  77.30
+Waitall              4   12    300     2.37     0.41   0.0915   6.55  77.52
+Waitall              4   13    300     2.07    0.407   0.0937   6.51  76.60
+Waitall              4   14    300     2.48    0.398    0.095   6.36  75.83
+Waitall              4   15    300     2.15    0.404    0.129   6.45  77.02
+Waitall              4   16    300     1.58    0.384   0.0949   6.16  76.30
+Waitall              4   17    300      1.8    0.392    0.124   6.29  76.35
+Waitall              4   18    300      2.7    0.393     0.12   6.30  76.47
+Waitall              4   19    300     2.65    0.393    0.125   6.31  76.61
+Waitall              4   20    300     2.69    0.402     0.12   6.45  76.97
+Waitall              4   21    300      1.7    0.392    0.117   6.29  76.41
+Waitall              4   22    300     1.98    0.377    0.117   6.04  74.70
+Waitall              4   23    300     1.75    0.376     0.11   6.04  75.38
+Waitall              4   24    300     1.37    0.366   0.0787   5.89  73.57
+Waitall              4   25    300     1.73    0.366    0.129   5.88  73.82
+Waitall              4   26    300     1.28    0.364    0.135   5.86  74.59
+Waitall              4   27    300     1.57    0.371    0.125   5.98  74.87
+Waitall              4   28    300     1.65    0.361    0.112   5.81  74.04
+Waitall              4   29    300     2.09    0.372    0.116   5.99  74.54
+Waitall              4   30    300     2.48    0.373   0.0801   6.00  75.55
+Waitall              4   31    300     1.67    0.366    0.135   5.88  74.88
+Waitall              4   32    300     1.63    0.341   0.0795   5.51  73.27
+Waitall              4   33    300     1.76    0.353    0.094   5.70  72.91
+Waitall              4   34    300        2     0.35   0.0853   5.65  73.01
+Waitall              4   35    300      1.7     0.37    0.118   5.97  76.22
+Waitall              4   36    300     1.82    0.379      0.1   6.12  75.48
+Waitall              4   37    300     1.81     0.35   0.0764   5.65  73.63
+Waitall              4   38    300     2.05    0.355   0.0758   5.74  73.28
+Waitall              4   39    300     1.71    0.374     0.12   6.04  75.86
+Waitall              4   40    300     1.58    0.359    0.119   5.77  74.12
+Waitall              4   41    300     1.93    0.362   0.0954   5.83  73.86
+Waitall              4   42    300     1.39    0.362    0.128   5.82  74.88
+Waitall              4   43    300     1.31    0.362    0.138   5.82  73.73
+Waitall              4   44    300     1.53     0.37    0.131   5.95  75.46
+Waitall              4   45    300     2.53    0.362   0.0999   5.82  73.87
+Waitall              4   46    300     2.09    0.361    0.106   5.81  74.27
+Waitall              4   47    300     2.47    0.361    0.117   5.80  73.70
+Waitall              4   48    300     2.01    0.389    0.115   6.24  75.37
+Waitall              4   49    300     2.01     0.38    0.109   6.10  75.60
+Waitall              4   50    300     1.78    0.398     0.12   6.39  76.48
+Waitall              4   51    300     1.66    0.368    0.107   5.91  73.68
+Waitall              4   52    300     1.79    0.378    0.109   6.07  75.47
+Waitall              4   53    300     1.75    0.374    0.114   6.00  73.42
+Waitall              4   54    300     2.54    0.395   0.0861   6.34  76.29
+Waitall              4   55    300     1.78    0.381    0.109   6.11  74.68
+Waitall              4   56    300     2.12    0.389    0.125   6.22  74.43
+Waitall              4   57    300     2.69    0.402    0.126   6.42  77.46
+Waitall              4   58    300      2.7    0.391    0.129   6.25  75.81
+Waitall              4   59    300     2.19    0.408    0.132   6.53  77.83
+Waitall              4   60    300     2.49    0.404    0.126   6.46  76.40
+Waitall              4   61    300     2.66    0.393    0.119   6.29  75.79
+Waitall              4   62    300     2.28    0.389    0.122   6.22  74.69
+Waitall              4   63    300     2.22    0.412    0.123   6.59  77.84
+Waitall              4    *  19200      2.7    0.363  0.00802   5.82  73.42
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------

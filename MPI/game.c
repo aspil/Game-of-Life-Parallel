@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 #include <mpi.h>
 #include <omp.h>
@@ -11,38 +12,80 @@
 
 int main(int argc, char *argv[]){
 	srand(time(0));
-
 	MPI_Comm cartesian;     // will be the new communicator
-	int grid_size, comm_sz;       //maybe grid_size should be passed by arg, e.g 64
+	char *input_file = NULL;
+	
+	int grid_size, comm_sz, threads=-1;       //maybe grid_size should be passed by arg, e.g 64
 	int my_rank, neighbour_rank, src, dest;
-	int comm_dims[2];       // dimensions of communicator shape, initialized to 0,0
+	int comm_dims[2] = {0,0};       // dimensions of communicator shape, initialized to 0,0
 	int period[2] = {1,1};       // in this implementation, we work on a simple-grid-shaped communicator
 	
 	int width_local, height_local;      // width x length of this process's chunk, initialized to 0x0
 	int i, j;       // declaring here, so it only costs once
-	// int chunk_pos[2];       // position of the chunk in the global grid of cells, initialized to 0,0
-
 
 #ifdef REDUCE
     int similarity_counter = 0, empty_counter = 0, sim_sum, e_sum;
 #endif
-	if (argc != 2) {
-		printf("Wrong program arguments. Usage: mpirun [-n] [X] game.x <grid size>\n");
+
+	/* Program parameter checking */
+	if (argc == 3 || argc == 5 || argc == 7) {
+		if (strcmp(argv[1], "-s") == 0) {
+			grid_size = atoi(argv[2]);
+		}
+		else {
+			printf("Usage mpirun [-np x] game_<mode>.x -s <grid_size> [[-f <input_file>] [-t <thread num>]]\n");
+			printf("-s <X> : set the grid's height and width to X.\n");
+			printf("-f <input_file> (optional): provide the program an input file with a grid.\n");
+			printf("-t <thread num> (optional): set the number of threads for openmp.\n\n");
+			MPI_Finalize();
+			return EXIT_FAILURE;
+		}
+		if (argv[3] != NULL) {
+			if (strcmp(argv[3], "-t") == 0)
+				threads = atoi(argv[4]);
+		}
+		else {
+			printf("Usage mpirun [-np x] game_<mode>.x -s <grid_size> [[-f <input_file>] [-t <thread num>]]\n");
+			printf("-s <X> : set the grid's height and width to X.\n");
+			printf("-f <input_file> (optional): provide the program an input file with a grid.\n");
+			printf("-t <thread num> (optional): set the number of threads for openmp.\n\n");
+			MPI_Finalize();
+			return EXIT_FAILURE;
+		}
+		if (argv[5] != NULL)
+			if (strcmp(argv[5], "-f") == 0)
+				input_file = argv[4];
+	}
+	else {
+		printf("Usage mpirun [-np x] game_<mode>.x -s <grid_size> [[-f <input_file>] [-t <thread num>]]\n");
+		printf("mode is one of [mpi, mpi_reduce, hybrid] and represents the name of the executable according to the compilation.\n");
+		printf("-s <X> : set the grid's height and width to X.\n");
+		printf("-f <input_file> (optional): provide the program an input file with a grid.\n");
+		printf("-t <thread num> (optional): set the number of threads for openmp.\n\n");
+		MPI_Finalize();
 		return EXIT_FAILURE;
 	}
-	grid_size = atoi(argv[1]);
+	/* Start MPI */
+	MPI_Init(NULL,NULL);
 
-	MPI_Init(NULL, NULL);   
 	MPI_Comm_rank(MPI_COMM_WORLD, &my_rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &comm_sz);
 
-	MPI_Dims_create(comm_sz, 2, comm_dims);    // determines a suitable distribution of processes, according to comm_sz
-	MPI_Cart_create(MPI_COMM_WORLD, 2 , comm_dims, period, 0, &cartesian);      // create a new communicator with topology information
+	/* Divide the processes on a cartesian manner */
+	MPI_Dims_create(comm_sz, 2, comm_dims);
+	
+	/* Create a cartesian topology with a new communicator */
+	MPI_Cart_create(MPI_COMM_WORLD, 2 , comm_dims, period, 0, &cartesian);
+	
+	/* Get the coordinates for the current process */
+	int my_coords[2] = {0,0};
+	MPI_Cart_coords(cartesian, my_rank, 2, my_coords);
 
+	/* Compute the length of the cells on the 2 axes */
 	height_local = (int) (grid_size / comm_dims[0]);      // casting is not actually necessary, everything is a power of 2
 	width_local = (int) (grid_size / comm_dims[1]);
+	
 	/* Allocate the 'before' and 'after' grids */
-	// printf("EDW1\n");
 	char **current = malloc((height_local+2) * sizeof(char*));
 	char *current0 = malloc((height_local+2) * (width_local+2) * sizeof(char));
 
@@ -53,16 +96,49 @@ int main(int argc, char *argv[]){
 		current[i] = current0 + i * (width_local+2);
 		next[i] = next0 + i * (width_local+2);
 	}
+	char **local_input;
+	char *d;
 
-	/* Initialize the 'before' or current subgrid */
-	for (i = 1; i < height_local + 1; i++)
-		for (j = 1; j < width_local + 1; j++)
-			current[i][j] = (rand() % 10) < 8 ? DEAD : ALIVE;	// dead : alive ratio 7:3
+	/* Read a subgrid from a file, if provided */
+	if (input_file != NULL) {
+		MPI_File fp;
+		MPI_Datatype subarray;
+		MPI_Status status;
 
-	/* Get the coordinates for the current process */
-	int my_coords[2];
-	MPI_Cart_coords(cartesian, my_rank, 2, my_coords);
-	
+		int initial_sizes[2] = { grid_size, grid_size+1 };
+		int sub_sizes[2] = { height_local, width_local };
+		int start_pos[2] = { my_coords[0] * height_local, my_coords[1] * width_local };
+
+		local_input = malloc(height_local * sizeof(char *));
+		d = malloc(width_local * height_local * sizeof(char));
+		// if (local_input == NULL || d == NULL)
+			// perror_exit("malloc: ");
+		for (int i = 0; i < height_local; ++i)
+			local_input[i] = &d[i * width_local];
+
+		MPI_Type_create_subarray(2, initial_sizes, sub_sizes, start_pos, MPI_ORDER_C, MPI_CHAR, &subarray);
+		MPI_Type_commit(&subarray);
+
+		MPI_File_open(cartesian, input_file, MPI_MODE_RDONLY, MPI_INFO_NULL, &fp);
+		MPI_File_set_view(fp, 0, MPI_CHAR, subarray, "native", MPI_INFO_NULL);
+		MPI_File_read_all(fp, &local_input[0][0], (height_local * width_local), MPI_CHAR, &status);
+
+		MPI_File_close(&fp);
+		MPI_Type_free(&subarray);
+		
+		
+		for (i = 0; i < height_local; i++)
+			for (j = 0; j < width_local; j++)
+				current[i+1][j+1] = local_input[i][j];
+	}
+	else {	/* Generate a random subgrid */
+		/* Initialize the 'before' or current subgrid */
+		for (i = 1; i < height_local + 1; i++)
+			for (j = 1; j < width_local + 1; j++)
+				current[i][j] = (rand() % 10) < 8 ? DEAD : ALIVE;	// dead : alive ratio 7:3
+	}
+
+
 	/* Precalculate the neighbours' ranks of the current process */
 	int neighbours[8];
 	int neighbour_dims[2];
@@ -144,6 +220,7 @@ int main(int argc, char *argv[]){
 		MPI_Startall(8, RRequests);
 		MPI_Startall(8, SRequests);
 		/* Εvolution of inner (white) cells */
+		#pragma omp parallel for schedule(static, (int)(height_local/threads)) shared(height_local, width_local, current, next) private(i, j, alive_neighbors) collapse(2)
 		for(i = 2; i < height_local; i++){
 			for(j = 2; j < width_local; j++){
 				alive_neighbors = current[i-1][j-1] +
@@ -166,7 +243,7 @@ int main(int argc, char *argv[]){
 		}
 
 		MPI_Waitall(8,  RRequests, MPI_STATUSES_IGNORE);
-
+		#pragma omp parallel for schedule(static, (int)(height_local/threads)) shared(height_local, current, next) private(i, alive_neighbors)
 		for(i = 1; i < height_local + 1; i++){   // calculating the green columns
 			/*-------------  Leftmost column -------------*/
 			alive_neighbors = current[i-1][0] +
@@ -205,7 +282,7 @@ int main(int argc, char *argv[]){
 			empty_counter += next[i][width_local];		// if 0 then none is alive => empty
 #endif
 		}
-
+		#pragma omp parallel for schedule(static, (int) width_local/threads) shared(height_local, current, next) private(j, alive_neighbors)
 		for(j = 1; j < width_local + 1; j++){   // calculating the green rows
 			/* -------------- Uppermost row --------------*/
 			alive_neighbors = current[0][j-1] +

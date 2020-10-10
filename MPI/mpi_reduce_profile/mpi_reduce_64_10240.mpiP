@@ -1,0 +1,518 @@
+@ mpiP
+@ Command : game_mpi_reduce.x 10240 PÑ 
+@ Version                  : 3.4.1
+@ MPIP Build date          : Oct 27 2018, 17:18:21
+@ Start time               : 2020 10 10 14:51:48
+@ Stop time                : 2020 10 10 14:51:48
+@ Timer Used               : PMPI_Wtime
+@ MPIP env var             : -t 10.0 -o -f mpi_reduce_profile
+@ Collector Rank           : 0
+@ Collector PID            : 12962
+@ Final Output Dir         : mpi_reduce_profile
+@ Report generation        : Single collector task
+@ MPI Task Assignment      : 0 argo-c3
+@ MPI Task Assignment      : 1 argo-c3
+@ MPI Task Assignment      : 2 argo-c3
+@ MPI Task Assignment      : 3 argo-c3
+@ MPI Task Assignment      : 4 argo-c3
+@ MPI Task Assignment      : 5 argo-c3
+@ MPI Task Assignment      : 6 argo-c3
+@ MPI Task Assignment      : 7 argo-c3
+@ MPI Task Assignment      : 8 argo-c4
+@ MPI Task Assignment      : 9 argo-c4
+@ MPI Task Assignment      : 10 argo-c4
+@ MPI Task Assignment      : 11 argo-c4
+@ MPI Task Assignment      : 12 argo-c4
+@ MPI Task Assignment      : 13 argo-c4
+@ MPI Task Assignment      : 14 argo-c4
+@ MPI Task Assignment      : 15 argo-c4
+@ MPI Task Assignment      : 16 argo-c1
+@ MPI Task Assignment      : 17 argo-c1
+@ MPI Task Assignment      : 18 argo-c1
+@ MPI Task Assignment      : 19 argo-c1
+@ MPI Task Assignment      : 20 argo-c1
+@ MPI Task Assignment      : 21 argo-c1
+@ MPI Task Assignment      : 22 argo-c1
+@ MPI Task Assignment      : 23 argo-c1
+@ MPI Task Assignment      : 24 argo-c2
+@ MPI Task Assignment      : 25 argo-c2
+@ MPI Task Assignment      : 26 argo-c2
+@ MPI Task Assignment      : 27 argo-c2
+@ MPI Task Assignment      : 28 argo-c2
+@ MPI Task Assignment      : 29 argo-c2
+@ MPI Task Assignment      : 30 argo-c2
+@ MPI Task Assignment      : 31 argo-c2
+@ MPI Task Assignment      : 32 argo-c5
+@ MPI Task Assignment      : 33 argo-c5
+@ MPI Task Assignment      : 34 argo-c5
+@ MPI Task Assignment      : 35 argo-c5
+@ MPI Task Assignment      : 36 argo-c5
+@ MPI Task Assignment      : 37 argo-c5
+@ MPI Task Assignment      : 38 argo-c5
+@ MPI Task Assignment      : 39 argo-c5
+@ MPI Task Assignment      : 40 argo-c6
+@ MPI Task Assignment      : 41 argo-c6
+@ MPI Task Assignment      : 42 argo-c6
+@ MPI Task Assignment      : 43 argo-c6
+@ MPI Task Assignment      : 44 argo-c6
+@ MPI Task Assignment      : 45 argo-c6
+@ MPI Task Assignment      : 46 argo-c6
+@ MPI Task Assignment      : 47 argo-c6
+@ MPI Task Assignment      : 48 argo-c7
+@ MPI Task Assignment      : 49 argo-c7
+@ MPI Task Assignment      : 50 argo-c7
+@ MPI Task Assignment      : 51 argo-c7
+@ MPI Task Assignment      : 52 argo-c7
+@ MPI Task Assignment      : 53 argo-c7
+@ MPI Task Assignment      : 54 argo-c7
+@ MPI Task Assignment      : 55 argo-c7
+@ MPI Task Assignment      : 56 argo-c8
+@ MPI Task Assignment      : 57 argo-c8
+@ MPI Task Assignment      : 58 argo-c8
+@ MPI Task Assignment      : 59 argo-c8
+@ MPI Task Assignment      : 60 argo-c8
+@ MPI Task Assignment      : 61 argo-c8
+@ MPI Task Assignment      : 62 argo-c8
+@ MPI Task Assignment      : 63 argo-c8
+
+---------------------------------------------------------------------------
+@--- MPI Time (seconds) ---------------------------------------------------
+---------------------------------------------------------------------------
+Task    AppTime    MPITime     MPI%
+   0      0.735     0.0609     8.29
+   1      0.735     0.0606     8.24
+   2      0.735     0.0624     8.49
+   3      0.735     0.0621     8.45
+   4      0.735      0.061     8.30
+   5      0.735     0.0608     8.26
+   6      0.735     0.0622     8.47
+   7      0.735     0.0614     8.36
+   8      0.735      0.054     7.35
+   9      0.735     0.0557     7.57
+  10      0.735     0.0519     7.06
+  11      0.735     0.0552     7.51
+  12      0.735      0.055     7.48
+  13      0.735     0.0552     7.50
+  14      0.735     0.0562     7.64
+  15      0.735     0.0526     7.16
+  16      0.735     0.0601     8.17
+  17      0.735     0.0613     8.34
+  18      0.735     0.0604     8.22
+  19      0.735     0.0608     8.27
+  20      0.735     0.0626     8.51
+  21      0.735      0.061     8.29
+  22      0.735     0.0611     8.31
+  23      0.735     0.0602     8.18
+  24      0.735     0.0619     8.43
+  25      0.735     0.0621     8.45
+  26      0.735     0.0642     8.73
+  27      0.735     0.0634     8.62
+  28      0.735     0.0627     8.53
+  29      0.735     0.0628     8.54
+  30      0.735     0.0636     8.65
+  31      0.735     0.0612     8.32
+  32      0.735     0.0623     8.48
+  33      0.735     0.0614     8.34
+  34      0.735     0.0602     8.19
+  35      0.735     0.0607     8.26
+  36      0.735     0.0632     8.60
+  37      0.735      0.063     8.57
+  38      0.735     0.0612     8.32
+  39      0.735      0.062     8.44
+  40      0.735     0.0634     8.62
+  41      0.735     0.0638     8.67
+  42      0.735     0.0624     8.49
+  43      0.735      0.064     8.71
+  44      0.735     0.0632     8.60
+  45      0.735     0.0591     8.04
+  46      0.735     0.0633     8.61
+  47      0.735     0.0638     8.68
+  48      0.735     0.0631     8.59
+  49      0.735     0.0611     8.31
+  50      0.735     0.0612     8.32
+  51      0.735     0.0615     8.37
+  52      0.735     0.0617     8.39
+  53      0.735     0.0594     8.08
+  54      0.735     0.0625     8.50
+  55      0.735     0.0621     8.45
+  56      0.735     0.0629     8.55
+  57      0.735     0.0618     8.41
+  58      0.735     0.0619     8.42
+  59      0.735     0.0633     8.61
+  60      0.735     0.0635     8.64
+  61      0.735     0.0622     8.46
+  62      0.735     0.0635     8.64
+  63      0.735     0.0631     8.58
+   *       47.1       3.91     8.31
+---------------------------------------------------------------------------
+@--- Callsites: 6 ---------------------------------------------------------
+---------------------------------------------------------------------------
+ ID Lev File/Address        Line Parent_Funct             MPI_Call
+  1   0 game.c               144 main                     Startall
+  2   0 game.c               143 main                     Startall
+  3   0 game.c               256 main                     Allreduce
+  4   0 game.c               167 main                     Waitall
+  5   0 game.c               255 main                     Allreduce
+  6   0 game.c               247 main                     Waitall
+---------------------------------------------------------------------------
+@--- Aggregate Time (top twenty, descending, milliseconds) ----------------
+---------------------------------------------------------------------------
+Call                 Site       Time    App%    MPI%     COV
+Allreduce               5   1.27e+03    2.70   32.56    0.34
+Waitall                 4   1.26e+03    2.68   32.31    0.13
+Startall                1        819    1.74   20.95    0.05
+Allreduce               3        291    0.62    7.44    0.39
+Waitall                 6        149    0.32    3.81    0.52
+Startall                2        115    0.24    2.94    0.19
+---------------------------------------------------------------------------
+@--- Aggregate Sent Message Size (top twenty, descending, bytes) ----------
+---------------------------------------------------------------------------
+Call                 Site      Count      Total       Avrg  Sent%
+Allreduce               3        640   2.56e+03          4  50.00
+Allreduce               5        640   2.56e+03          4  50.00
+---------------------------------------------------------------------------
+@--- Callsite Time statistics (all, milliseconds): 384 --------------------
+---------------------------------------------------------------------------
+Name              Site Rank  Count      Max     Mean      Min   App%   MPI%
+Allreduce            3    8     10    0.982    0.777    0.598   1.06  14.38
+Allreduce            3    9     10    0.921    0.762    0.648   1.04  13.69
+Allreduce            3   10     10    0.867    0.797    0.616   1.08  15.36
+Allreduce            3   11     10    0.851    0.772    0.688   1.05  13.98
+Allreduce            3   12     10    0.989    0.755    0.607   1.03  13.72
+Allreduce            3   13     10    0.914    0.747    0.578   1.02  13.53
+Allreduce            3   14     10    0.954     0.79    0.652   1.07  14.06
+Allreduce            3   15     10    0.917    0.769    0.572   1.05  14.62
+Allreduce            3    *    640    0.989    0.454   0.0279   0.62   7.44
+
+Allreduce            5    0     10     2.48     2.07     1.86   2.82  33.99
+Allreduce            5    1     10     2.27     1.98     1.15   2.70  32.73
+Allreduce            5    2     10     3.23     2.17     1.92   2.95  34.74
+Allreduce            5    3     10      3.1     2.18     1.92   2.97  35.11
+Allreduce            5    4     10     3.21     2.16      1.9   2.93  35.35
+Allreduce            5    5     10     3.13     2.14      1.7   2.91  35.23
+Allreduce            5    6     10     3.46     2.15     1.92   2.93  34.58
+Allreduce            5    7     10     2.36     2.02     1.12   2.74  32.84
+Allreduce            5   13     10     2.06    0.576    0.125   0.78  10.44
+Allreduce            5   16     10     2.54     2.08     1.17   2.82  34.55
+Allreduce            5   17     10      2.5     2.14      1.3   2.91  34.93
+Allreduce            5   18     10        3     2.26     2.08   3.07  37.34
+Allreduce            5   19     10     2.86     2.21     1.98   3.00  36.33
+Allreduce            5   20     10     2.99     2.28      2.1   3.11  36.52
+Allreduce            5   21     10     3.01     2.27     2.06   3.09  37.27
+Allreduce            5   22     10     2.82     2.21     2.03   3.01  36.21
+Allreduce            5   23     10     2.43        2      1.3   2.72  33.25
+Allreduce            5   24     10      2.4     2.01      1.5   2.74  32.46
+Allreduce            5   25     10     2.29     1.95     1.53   2.66  31.45
+Allreduce            5   26     10     2.43     1.96     1.52   2.67  30.62
+Allreduce            5   27     10     3.18     2.21     1.81   3.00  34.87
+Allreduce            5   28     10     3.48     2.22     1.75   3.02  35.39
+Allreduce            5   29     10     3.16      2.2     1.65   2.99  34.97
+Allreduce            5   30     10     2.67     2.08     1.69   2.83  32.74
+Allreduce            5   31     10     2.31     2.04     1.64   2.78  33.37
+Allreduce            5   32     10     2.96     2.26     1.99   3.08  36.31
+Allreduce            5   33     10     3.03     2.28     1.91   3.10  37.20
+Allreduce            5   34     10     3.36     2.42     1.96   3.29  40.13
+Allreduce            5   35     10     2.96     2.39      2.1   3.25  39.40
+Allreduce            5   36     10        3     2.28     1.84   3.11  36.11
+Allreduce            5   37     10     2.97     2.29     1.91   3.12  36.35
+Allreduce            5   38     10     3.37     2.51     1.95   3.41  40.98
+Allreduce            5   39     10     3.09     2.38     1.96   3.24  38.42
+Allreduce            5   40     10     3.45     2.28     1.96   3.10  35.94
+Allreduce            5   41     10      2.6     2.24     1.95   3.05  35.13
+Allreduce            5   42     10     2.73      2.2     1.89   2.99  35.21
+Allreduce            5   43     10     2.51     2.24     1.99   3.05  34.98
+Allreduce            5   44     10     3.41      2.1    0.583   2.85  33.16
+Allreduce            5   45     10     2.71     1.96    0.475   2.66  33.11
+Allreduce            5   46     10     2.91     1.98    0.488   2.70  31.34
+Allreduce            5   47     10     2.91     2.17     1.95   2.95  34.02
+Allreduce            5   48     10     3.03     2.59      2.4   3.53  41.08
+Allreduce            5   49     10     3.75     2.67     2.44   3.63  43.68
+Allreduce            5   50     10     3.03     2.54     2.02   3.45  41.45
+Allreduce            5   51     10     3.23     2.69      2.4   3.66  43.80
+Allreduce            5   52     10     3.13     2.54     1.73   3.46  41.20
+Allreduce            5   53     10     3.29     2.51     1.67   3.42  42.29
+Allreduce            5   54     10     3.23     2.55     1.79   3.47  40.86
+Allreduce            5   55     10     3.14      2.7      2.3   3.67  43.38
+Allreduce            5   56     10     2.21     2.05     1.92   2.79  32.66
+Allreduce            5   57     10     2.44     2.08     1.69   2.83  33.72
+Allreduce            5   58     10     2.33     2.05     1.79   2.78  33.06
+Allreduce            5   59     10     2.98     2.19     1.86   2.98  34.63
+Allreduce            5   60     10     3.62     2.24     1.86   3.05  35.28
+Allreduce            5   61     10     3.64     2.28     1.83   3.11  36.70
+Allreduce            5   62     10     2.33     2.09     1.85   2.84  32.88
+Allreduce            5   63     10     2.21     2.09     1.88   2.85  33.17
+Allreduce            5    *    640     3.75     1.99   0.0711   2.70  32.56
+
+Startall             1    0    100     1.02    0.132   0.0704   1.80  21.70
+Startall             1    1    100     1.16    0.124   0.0671   1.68  20.43
+Startall             1    2    100    0.954    0.133   0.0745   1.81  21.32
+Startall             1    3    100     1.07     0.13   0.0694   1.77  20.98
+Startall             1    4    100    0.922    0.125   0.0717   1.70  20.48
+Startall             1    5    100     1.05    0.127   0.0677   1.73  20.92
+Startall             1    6    100     1.11     0.14   0.0792   1.90  22.45
+Startall             1    7    100     1.18    0.132   0.0679   1.80  21.55
+Startall             1    8    100      1.2    0.132   0.0651   1.79  24.38
+Startall             1    9    100     1.05    0.124   0.0684   1.69  22.26
+Startall             1   10    100     1.35    0.122   0.0641   1.66  23.55
+Startall             1   11    100    0.924     0.13   0.0625   1.77  23.53
+Startall             1   12    100     1.03    0.132    0.067   1.79  23.96
+Startall             1   13    100      0.9    0.128   0.0631   1.75  23.26
+Startall             1   14    100    0.947    0.127    0.065   1.73  22.65
+Startall             1   15    100     1.21     0.13   0.0634   1.76  24.64
+Startall             1   16    100    0.933    0.128   0.0706   1.74  21.24
+Startall             1   17    100     1.12    0.133   0.0738   1.80  21.63
+Startall             1   18    100     1.04    0.131   0.0735   1.79  21.73
+Startall             1   19    100    0.811    0.129   0.0669   1.76  21.31
+Startall             1   20    100     1.24    0.148   0.0823   2.02  23.67
+Startall             1   21    100     1.02    0.136     0.08   1.85  22.37
+Startall             1   22    100     1.17    0.134    0.075   1.83  21.97
+Startall             1   23    100    0.985    0.127   0.0698   1.73  21.08
+Startall             1   24    100    0.856    0.122   0.0602   1.66  19.70
+Startall             1   25    100     1.21    0.129    0.062   1.76  20.81
+Startall             1   26    100     1.01    0.123   0.0632   1.67  19.17
+Startall             1   27    100     1.02    0.135   0.0657   1.83  21.23
+Startall             1   28    100    0.749    0.125   0.0717   1.71  20.00
+Startall             1   29    100      1.1    0.136   0.0633   1.85  21.64
+Startall             1   30    100    0.948    0.128   0.0656   1.74  20.13
+Startall             1   31    100     0.92    0.124   0.0604   1.68  20.20
+Startall             1   32    100    0.943    0.129   0.0733   1.76  20.71
+Startall             1   33    100     0.86    0.135   0.0622   1.84  22.05
+Startall             1   34    100     1.09    0.116   0.0637   1.58  19.34
+Startall             1   35    100     1.06    0.124   0.0693   1.68  20.36
+Startall             1   36    100    0.913     0.13   0.0695   1.77  20.58
+Startall             1   37    100     0.81    0.127   0.0631   1.73  20.16
+Startall             1   38    100      1.2    0.124   0.0594   1.68  20.23
+Startall             1   39    100     1.21    0.132   0.0724   1.80  21.31
+Startall             1   40    100     1.14    0.129   0.0626   1.76  20.42
+Startall             1   41    100     1.17    0.124   0.0611   1.69  19.48
+Startall             1   42    100     0.92    0.122   0.0621   1.66  19.59
+Startall             1   43    100    0.914    0.132   0.0601   1.80  20.65
+Startall             1   44    100     1.23    0.129   0.0621   1.75  20.37
+Startall             1   45    100    0.821    0.113   0.0586   1.54  19.14
+Startall             1   46    100     1.17    0.118    0.059   1.61  18.66
+Startall             1   47    100    0.989    0.112   0.0584   1.53  17.59
+Startall             1   48    100     1.09    0.134   0.0788   1.82  21.21
+Startall             1   49    100    0.853    0.115   0.0714   1.57  18.86
+Startall             1   50    100     1.09    0.127   0.0698   1.73  20.80
+Startall             1   51    100    0.906    0.122   0.0763   1.66  19.80
+Startall             1   52    100     1.04    0.125   0.0727   1.70  20.25
+Startall             1   53    100     1.27    0.127   0.0623   1.73  21.47
+Startall             1   54    100     1.24    0.128   0.0743   1.74  20.45
+Startall             1   55    100     1.01    0.118   0.0727   1.60  18.93
+Startall             1   56    100     1.15    0.122   0.0619   1.66  19.40
+Startall             1   57    100     0.98     0.13   0.0618   1.77  20.99
+Startall             1   58    100    0.881    0.132   0.0604   1.79  21.29
+Startall             1   59    100     1.18    0.133   0.0666   1.81  20.96
+Startall             1   60    100     1.01    0.135   0.0637   1.84  21.25
+Startall             1   61    100    0.932    0.125   0.0609   1.69  20.03
+Startall             1   62    100    0.939    0.127   0.0616   1.73  20.00
+Startall             1   63    100     1.21    0.133   0.0697   1.81  21.09
+Startall             1    *   6400     1.35    0.128   0.0584   1.74  20.95
+
+Startall             2    *   6400     0.98    0.018  0.00238   0.24   2.94
+
+Waitall              4    0    100     3.52    0.194    0.109   2.63  31.78
+Waitall              4    1    100     3.36    0.205   0.0582   2.79  33.84
+Waitall              4    2    100     1.79    0.196    0.112   2.67  31.41
+Waitall              4    3    100     1.62    0.192     0.12   2.62  30.95
+Waitall              4    4    100     1.78     0.19     0.11   2.59  31.15
+Waitall              4    5    100     2.52    0.188   0.0519   2.56  30.94
+Waitall              4    6    100     1.68    0.185    0.107   2.52  29.72
+Waitall              4    7    100      3.4    0.201   0.0746   2.73  32.72
+Waitall              4    8    100     2.49    0.254  0.00387   3.46  47.08
+Waitall              4    9    100     2.38    0.254    0.115   3.45  45.61
+Waitall              4   10    100     1.98    0.258   0.0939   3.51  49.75
+Waitall              4   11    100     1.74    0.264   0.0064   3.59  47.76
+Waitall              4   12    100     1.69    0.269    0.115   3.66  48.94
+Waitall              4   13    100     1.45    0.244   0.0967   3.32  44.23
+Waitall              4   14    100     2.24    0.263  0.00758   3.58  46.86
+Waitall              4   15    100     2.27    0.265   0.0917   3.61  50.40
+Waitall              4   16    100     3.27    0.207   0.0838   2.81  34.42
+Waitall              4   17    100     3.37    0.207   0.0787   2.82  33.84
+Waitall              4   18    100     1.71    0.189     0.12   2.58  31.35
+Waitall              4   19    100     1.62    0.205   0.0895   2.78  33.69
+Waitall              4   20    100     1.49    0.183    0.117   2.49  29.26
+Waitall              4   21    100     1.81    0.186   0.0981   2.53  30.46
+Waitall              4   22    100     1.57    0.193    0.124   2.62  31.56
+Waitall              4   23    100     3.47    0.217   0.0834   2.95  36.06
+Waitall              4   24    100     1.98    0.179  0.00431   2.44  28.94
+Waitall              4   25    100     2.63    0.193   0.0438   2.63  31.12
+Waitall              4   26    100     2.44    0.196   0.0681   2.67  30.57
+Waitall              4   27    100     1.66    0.181  0.00415   2.46  28.58
+Waitall              4   28    100     1.47    0.176   0.0616   2.40  28.09
+Waitall              4   29    100     1.75    0.178  0.00527   2.43  28.41
+Waitall              4   30    100     2.69    0.191  0.00939   2.60  30.08
+Waitall              4   31    100     2.41    0.185  0.00429   2.51  30.17
+Waitall              4   32    100     2.23    0.193   0.0802   2.62  30.95
+Waitall              4   33    100     1.77    0.186   0.0732   2.53  30.35
+Waitall              4   34    100     1.35    0.163  0.00553   2.22  27.12
+Waitall              4   35    100     1.57    0.178   0.0781   2.42  29.36
+Waitall              4   36    100     1.69    0.189   0.0967   2.57  29.85
+Waitall              4   37    100     1.59    0.193   0.0944   2.63  30.66
+Waitall              4   38    100     1.91    0.176   0.0885   2.39  28.76
+Waitall              4   39    100     1.66    0.178   0.0745   2.42  28.67
+Waitall              4   40    100     1.56    0.176  0.00528   2.40  27.83
+Waitall              4   41    100     2.23    0.172  0.00515   2.34  27.00
+Waitall              4   42    100     1.66    0.181   0.0102   2.46  28.94
+Waitall              4   43    100     2.06    0.184   0.0046   2.50  28.67
+Waitall              4   44    100     1.17    0.168  0.00492   2.29  26.64
+Waitall              4   45    100     1.66    0.182  0.00586   2.47  30.78
+Waitall              4   46    100      1.7     0.18  0.00423   2.45  28.46
+Waitall              4   47    100     2.26    0.195  0.00437   2.66  30.63
+Waitall              4   48    100     1.73    0.188    0.123   2.55  29.74
+Waitall              4   49    100     1.57    0.186    0.116   2.52  30.36
+Waitall              4   50    100     2.16    0.186   0.0517   2.53  30.42
+Waitall              4   51    100     1.61    0.178    0.101   2.43  29.02
+Waitall              4   52    100     1.61    0.181   0.0985   2.47  29.43
+Waitall              4   53    100     1.47    0.173   0.0796   2.35  29.08
+Waitall              4   54    100     1.87    0.178    0.106   2.42  28.50
+Waitall              4   55    100     1.79    0.191    0.127   2.60  30.81
+Waitall              4   56    100     3.09    0.203  0.00607   2.76  32.25
+Waitall              4   57    100     2.83    0.194  0.00474   2.64  31.39
+Waitall              4   58    100     2.54    0.191   0.0632   2.60  30.87
+Waitall              4   59    100     1.99    0.205    0.086   2.79  32.37
+Waitall              4   60    100     1.58    0.176  0.00495   2.40  27.73
+Waitall              4   61    100     1.59    0.191  0.00596   2.60  30.76
+Waitall              4   62    100     3.15     0.21  0.00387   2.85  32.99
+Waitall              4   63    100     3.09    0.212   0.0959   2.89  33.63
+Waitall              4    *   6400     3.52    0.197  0.00387   2.68  32.31
+
+Waitall              6    *   6400      1.4   0.0232 0.000861   0.32   3.81
+---------------------------------------------------------------------------
+@--- Callsite Message Sent statistics (all, sent bytes) -------------------
+---------------------------------------------------------------------------
+Name              Site Rank   Count       Max      Mean       Min       Sum
+Allreduce            3    0      10         4         4         4        40
+Allreduce            3    1      10         4         4         4        40
+Allreduce            3    2      10         4         4         4        40
+Allreduce            3    3      10         4         4         4        40
+Allreduce            3    4      10         4         4         4        40
+Allreduce            3    5      10         4         4         4        40
+Allreduce            3    6      10         4         4         4        40
+Allreduce            3    7      10         4         4         4        40
+Allreduce            3    8      10         4         4         4        40
+Allreduce            3    9      10         4         4         4        40
+Allreduce            3   10      10         4         4         4        40
+Allreduce            3   11      10         4         4         4        40
+Allreduce            3   12      10         4         4         4        40
+Allreduce            3   13      10         4         4         4        40
+Allreduce            3   14      10         4         4         4        40
+Allreduce            3   15      10         4         4         4        40
+Allreduce            3   16      10         4         4         4        40
+Allreduce            3   17      10         4         4         4        40
+Allreduce            3   18      10         4         4         4        40
+Allreduce            3   19      10         4         4         4        40
+Allreduce            3   20      10         4         4         4        40
+Allreduce            3   21      10         4         4         4        40
+Allreduce            3   22      10         4         4         4        40
+Allreduce            3   23      10         4         4         4        40
+Allreduce            3   24      10         4         4         4        40
+Allreduce            3   25      10         4         4         4        40
+Allreduce            3   26      10         4         4         4        40
+Allreduce            3   27      10         4         4         4        40
+Allreduce            3   28      10         4         4         4        40
+Allreduce            3   29      10         4         4         4        40
+Allreduce            3   30      10         4         4         4        40
+Allreduce            3   31      10         4         4         4        40
+Allreduce            3   32      10         4         4         4        40
+Allreduce            3   33      10         4         4         4        40
+Allreduce            3   34      10         4         4         4        40
+Allreduce            3   35      10         4         4         4        40
+Allreduce            3   36      10         4         4         4        40
+Allreduce            3   37      10         4         4         4        40
+Allreduce            3   38      10         4         4         4        40
+Allreduce            3   39      10         4         4         4        40
+Allreduce            3   40      10         4         4         4        40
+Allreduce            3   41      10         4         4         4        40
+Allreduce            3   42      10         4         4         4        40
+Allreduce            3   43      10         4         4         4        40
+Allreduce            3   44      10         4         4         4        40
+Allreduce            3   45      10         4         4         4        40
+Allreduce            3   46      10         4         4         4        40
+Allreduce            3   47      10         4         4         4        40
+Allreduce            3   48      10         4         4         4        40
+Allreduce            3   49      10         4         4         4        40
+Allreduce            3   50      10         4         4         4        40
+Allreduce            3   51      10         4         4         4        40
+Allreduce            3   52      10         4         4         4        40
+Allreduce            3   53      10         4         4         4        40
+Allreduce            3   54      10         4         4         4        40
+Allreduce            3   55      10         4         4         4        40
+Allreduce            3   56      10         4         4         4        40
+Allreduce            3   57      10         4         4         4        40
+Allreduce            3   58      10         4         4         4        40
+Allreduce            3   59      10         4         4         4        40
+Allreduce            3   60      10         4         4         4        40
+Allreduce            3   61      10         4         4         4        40
+Allreduce            3   62      10         4         4         4        40
+Allreduce            3   63      10         4         4         4        40
+Allreduce            3    *     640         4         4         4      2560
+
+Allreduce            5    0      10         4         4         4        40
+Allreduce            5    1      10         4         4         4        40
+Allreduce            5    2      10         4         4         4        40
+Allreduce            5    3      10         4         4         4        40
+Allreduce            5    4      10         4         4         4        40
+Allreduce            5    5      10         4         4         4        40
+Allreduce            5    6      10         4         4         4        40
+Allreduce            5    7      10         4         4         4        40
+Allreduce            5    8      10         4         4         4        40
+Allreduce            5    9      10         4         4         4        40
+Allreduce            5   10      10         4         4         4        40
+Allreduce            5   11      10         4         4         4        40
+Allreduce            5   12      10         4         4         4        40
+Allreduce            5   13      10         4         4         4        40
+Allreduce            5   14      10         4         4         4        40
+Allreduce            5   15      10         4         4         4        40
+Allreduce            5   16      10         4         4         4        40
+Allreduce            5   17      10         4         4         4        40
+Allreduce            5   18      10         4         4         4        40
+Allreduce            5   19      10         4         4         4        40
+Allreduce            5   20      10         4         4         4        40
+Allreduce            5   21      10         4         4         4        40
+Allreduce            5   22      10         4         4         4        40
+Allreduce            5   23      10         4         4         4        40
+Allreduce            5   24      10         4         4         4        40
+Allreduce            5   25      10         4         4         4        40
+Allreduce            5   26      10         4         4         4        40
+Allreduce            5   27      10         4         4         4        40
+Allreduce            5   28      10         4         4         4        40
+Allreduce            5   29      10         4         4         4        40
+Allreduce            5   30      10         4         4         4        40
+Allreduce            5   31      10         4         4         4        40
+Allreduce            5   32      10         4         4         4        40
+Allreduce            5   33      10         4         4         4        40
+Allreduce            5   34      10         4         4         4        40
+Allreduce            5   35      10         4         4         4        40
+Allreduce            5   36      10         4         4         4        40
+Allreduce            5   37      10         4         4         4        40
+Allreduce            5   38      10         4         4         4        40
+Allreduce            5   39      10         4         4         4        40
+Allreduce            5   40      10         4         4         4        40
+Allreduce            5   41      10         4         4         4        40
+Allreduce            5   42      10         4         4         4        40
+Allreduce            5   43      10         4         4         4        40
+Allreduce            5   44      10         4         4         4        40
+Allreduce            5   45      10         4         4         4        40
+Allreduce            5   46      10         4         4         4        40
+Allreduce            5   47      10         4         4         4        40
+Allreduce            5   48      10         4         4         4        40
+Allreduce            5   49      10         4         4         4        40
+Allreduce            5   50      10         4         4         4        40
+Allreduce            5   51      10         4         4         4        40
+Allreduce            5   52      10         4         4         4        40
+Allreduce            5   53      10         4         4         4        40
+Allreduce            5   54      10         4         4         4        40
+Allreduce            5   55      10         4         4         4        40
+Allreduce            5   56      10         4         4         4        40
+Allreduce            5   57      10         4         4         4        40
+Allreduce            5   58      10         4         4         4        40
+Allreduce            5   59      10         4         4         4        40
+Allreduce            5   60      10         4         4         4        40
+Allreduce            5   61      10         4         4         4        40
+Allreduce            5   62      10         4         4         4        40
+Allreduce            5   63      10         4         4         4        40
+Allreduce            5    *     640         4         4         4      2560
+---------------------------------------------------------------------------
+@--- End of Report --------------------------------------------------------
+---------------------------------------------------------------------------
